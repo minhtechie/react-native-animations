@@ -1,6 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Modal, TouchableOpacity} from 'react-native';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import {
+  StyleSheet,
+  View,
+  Modal,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import SearchInput from './SearchInput';
 
 type SearchModalProps = {
@@ -11,6 +16,7 @@ export default function SearchModal({visible, onClose}: SearchModalProps) {
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.content}>
+        <SafeAreaView />
         <SearchInput />
       </View>
       <TouchableOpacity
@@ -30,7 +36,7 @@ const styles = StyleSheet.create({
   content: {
     height: 100,
     paddingHorizontal: 16,
-    paddingTop: 16 + getStatusBarHeight(),
+    justifyContent: 'center',
     backgroundColor: 'white',
   },
 });

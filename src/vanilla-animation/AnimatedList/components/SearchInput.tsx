@@ -7,6 +7,7 @@ export default (props: TextInputProps) => {
       <TextInput
         style={styles.input}
         placeholder="Search in Minh Techie Restaurant..."
+        placeholderTextColor="#d3d3d3"
         autoFocus
         {...props}
       />
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     backgroundColor: '#f6f6f6',
+    color: '#333',
   },
   searchIcon: {
     width: 24,

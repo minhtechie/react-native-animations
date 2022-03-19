@@ -92,12 +92,12 @@ export default function VideoItem({
   ]);
 
   const bottomTabHeight = useBottomTabBarHeight();
-
+  const statusBarHeight = StatusBar.currentHeight || 0;
   return (
     <View
       style={[
         styles.container,
-        {height: WINDOW_HEIGHT - bottomTabHeight - StatusBar.currentHeight},
+        {height: WINDOW_HEIGHT - bottomTabHeight - statusBarHeight},
       ]}>
       <StatusBar barStyle={'light-content'} />
 
