@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loveButton: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     backgroundColor: 'white',
     ...Platform.select({
       android: {elevation: 3},
