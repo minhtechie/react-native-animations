@@ -12,6 +12,7 @@ import SwipeableList from './SwipeableList/SwipeableList';
 import CubeCarousel from './CubeCarousel/CubeCarousel';
 import PickPhoneColor from './PickPhoneColor/PickPhoneColor';
 import TikTokTabNavigator from './TikTok/TikTokTabNavigator';
+import ReactToMessage from './ReactToMessage/ReactToMessage';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,9 +57,14 @@ export default () => (
         options={{title: 'Cube Carousel'}}
       />
       <Stack.Screen
-        name="TikTikTokTabNavigatorTok"
+        name="TikTokTabNavigator"
         component={TikTokTabNavigator}
         options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="ReactToMessage"
+        component={ReactToMessage}
+        options={{title: 'React To Message'}}
       />
     </Stack.Navigator>
   </NavigationContainer>
@@ -102,9 +108,14 @@ const HomeScreen = ({navigation}: any) => {
         <Text>Cube Carousel</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigate('TikTikTokTabNavigatorTok')}
+        onPress={() => navigate('TikTokTabNavigator')}
         style={styles.item}>
         <Text>TikTok</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigate('ReactToMessage')}
+        style={styles.item}>
+        <Text>React To Message</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
