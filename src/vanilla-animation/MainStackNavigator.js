@@ -70,53 +70,48 @@ export default () => (
   </NavigationContainer>
 );
 
+const MenuItem = ({onPress, label}) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.item}>
+      <Text style={styles.text}>{label}</Text>
+    </TouchableOpacity>
+  );
+};
+
 const HomeScreen = ({navigation}: any) => {
   const {navigate} = navigation;
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
+      <MenuItem
         onPress={() => navigate('AnimatedList')}
-        style={styles.item}>
-        <Text>Animated List</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+        label="Animated List"
+      />
+      <MenuItem
         onPress={() => navigate('DraggableBottomSheet')}
-        style={styles.item}>
-        <Text>Draggable Bottom Sheet</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate('Tinder')} style={styles.item}>
-        <Text>Tinder</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+        label="Draggable Bottom Sheet"
+      />
+      <MenuItem onPress={() => navigate('Tinder')} label="Tinder" />
+      <MenuItem
         onPress={() => navigate('ZoomableImage')}
-        style={styles.item}>
-        <Text>Zoomable Image</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+        label="Zoomable Image"
+      />
+      <MenuItem
         onPress={() => navigate('SwipeableList')}
-        style={styles.item}>
-        <Text>Swipeable List</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+        label="Swipeable List"
+      />
+      <MenuItem
         onPress={() => navigate('PickPhoneColor')}
-        style={styles.item}>
-        <Text>Pick phone color</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+        label="Pick phone color"
+      />
+      <MenuItem
         onPress={() => navigate('CubeCarousel')}
-        style={styles.item}>
-        <Text>Cube Carousel</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigate('TikTokTabNavigator')}
-        style={styles.item}>
-        <Text>TikTok</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+        label="Cube Carousel"
+      />
+      <MenuItem onPress={() => navigate('TikTokTabNavigator')} label="TikTok" />
+      <MenuItem
         onPress={() => navigate('ReactToMessage')}
-        style={styles.item}>
-        <Text>React To Message</Text>
-      </TouchableOpacity>
+        label="React To Message"
+      />
     </SafeAreaView>
   );
 };
@@ -130,5 +125,8 @@ const styles = StyleSheet.create({
     margin: 8,
     borderWidth: 1,
     borderRadius: 8,
+  },
+  text: {
+    color: 'black',
   },
 });
