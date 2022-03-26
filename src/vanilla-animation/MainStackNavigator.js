@@ -13,12 +13,16 @@ import CubeCarousel from './CubeCarousel/CubeCarousel';
 import PickPhoneColor from './PickPhoneColor/PickPhoneColor';
 import TikTokTabNavigator from './TikTok/TikTokTabNavigator';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
+import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 
 const Stack = createNativeStackNavigator();
 
 export default () => (
   <NavigationContainer>
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitle: '',
+      }}>
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -35,7 +39,6 @@ export default () => (
         component={DraggableBottomSheet}
         options={{title: 'Draggable Bottom Sheet'}}
       />
-
       <Stack.Screen
         name="ZoomableImage"
         component={ZoomableImage}
@@ -65,6 +68,11 @@ export default () => (
         name="ReactToMessage"
         component={ReactToMessage}
         options={{title: 'React To Message'}}
+      />
+      <Stack.Screen
+        name="DoubleTapToHeart"
+        component={DoubleTapToHeart}
+        options={{title: 'Double Tap To Heart'}}
       />
     </Stack.Navigator>
   </NavigationContainer>
@@ -111,6 +119,10 @@ const HomeScreen = ({navigation}: any) => {
       <MenuItem
         onPress={() => navigate('ReactToMessage')}
         label="React To Message"
+      />
+      <MenuItem
+        onPress={() => navigate('DoubleTapToHeart')}
+        label="Double Tap To Heart"
       />
     </SafeAreaView>
   );
