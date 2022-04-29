@@ -7,7 +7,7 @@ export default (props: TextInputProps) => {
       <TextInput
         style={styles.input}
         placeholder="Search in Minh Techie Restaurant..."
-        placeholderTextColor="#d3d3d3"
+        placeholderTextColor="#909090"
         autoFocus
         {...props}
       />

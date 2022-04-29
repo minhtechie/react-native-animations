@@ -39,9 +39,25 @@ export default ({navigation}: any) => {
       inputRange: [0, 40],
       outputRange: [0, 1],
     }),
+    transform: [
+      {
+        scale: animatedValue.interpolate({
+          inputRange: [0, 1, 40],
+          outputRange: [0, 1, 1],
+          extrapolate: 'clamp',
+        }),
+      },
+    ],
   };
 
   const searchIconAnimation = {
+    opacity: animatedValue.interpolate({
+      inputRange: [0, 40],
+      outputRange: [1, 0],
+    }),
+  };
+
+  const backIconAnimation = {
     opacity: animatedValue.interpolate({
       inputRange: [0, 40],
       outputRange: [1, 0],
@@ -62,9 +78,9 @@ export default ({navigation}: any) => {
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}>
-        <Image
+        <Animated.Image
           source={require('../../assets/images/food-app/left-arrow.png')}
-          style={[styles.backIcon]}
+          style={[styles.backIcon, backIconAnimation]}
         />
       </TouchableOpacity>
       <TouchableOpacity
@@ -227,9 +243,9 @@ const styles = StyleSheet.create({
     ...Platform.select({
       android: {elevation: 3},
       ios: {
-        shadowColor: '#a8bed2',
+        shadowColor: '#d3d3d3',
         shadowOpacity: 1,
-        shadowRadius: 8,
+        shadowRadius: 3,
         shadowOffset: {
           width: 2,
           height: 2,

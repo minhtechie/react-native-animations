@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   content: {
-    height: 100,
-    paddingHorizontal: 16,
+    padding: 16,
     justifyContent: 'center',
     backgroundColor: 'white',
   },
