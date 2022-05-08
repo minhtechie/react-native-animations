@@ -14,6 +14,7 @@ import PickPhoneColor from './PickPhoneColor/PickPhoneColor';
 import TikTokTabNavigator from './TikTok/TikTokTabNavigator';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
+import MoMoHeader from './MomoHeader/MomoHeader';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +75,11 @@ export default () => (
         component={DoubleTapToHeart}
         options={{title: 'Double Tap To Heart'}}
       />
+      <Stack.Screen
+        name="MoMoHeader"
+        component={MoMoHeader}
+        options={{header: () => null}}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );
@@ -124,6 +130,7 @@ const HomeScreen = ({navigation}: any) => {
         onPress={() => navigate('DoubleTapToHeart')}
         label="Double Tap To Heart"
       />
+      <MenuItem onPress={() => navigate('MoMoHeader')} label="MoMo Header" />
     </SafeAreaView>
   );
 };
@@ -131,14 +138,19 @@ const HomeScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   item: {
+    width: '50%',
+    alignItems: 'center',
     padding: 8,
     margin: 8,
-    borderWidth: 1,
     borderRadius: 8,
+    backgroundColor: '#0584FE',
   },
   text: {
-    color: 'black',
+    color: 'white',
   },
 });
