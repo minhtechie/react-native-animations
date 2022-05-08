@@ -43,7 +43,7 @@ export default () => (
       <Stack.Screen
         name="ZoomableImage"
         component={ZoomableImage}
-        options={{title: 'Swipe Deck'}}
+        options={{title: 'Zoomable Image'}}
       />
       <Stack.Screen
         name="SwipeableList"
