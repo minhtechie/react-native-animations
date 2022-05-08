@@ -169,7 +169,7 @@ export default function MomoHeader() {
           <Animated.View style={[styles.feature, depositViewAnimation]}>
             <Animated.Image
               source={require('../../assets/images/momo/deposit.png')}
-              style={[styles.noCircleFeatureIcon, featureIconAnimation]}
+              style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
               source={require('../../assets/images/momo/deposit-circle.png')}
@@ -183,7 +183,7 @@ export default function MomoHeader() {
           <Animated.View style={[styles.feature, withdrawViewAnimation]}>
             <Animated.Image
               source={require('../../assets/images/momo/withdraw.png')}
-              style={[styles.noCircleFeatureIcon, featureIconAnimation]}
+              style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
               source={require('../../assets/images/momo/withdraw-circle.png')}
@@ -197,7 +197,7 @@ export default function MomoHeader() {
           <Animated.View style={[styles.feature, qrViewAnimation]}>
             <Animated.Image
               source={require('../../assets/images/momo/qr.png')}
-              style={[styles.noCircleFeatureIcon, featureIconAnimation]}
+              style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
               source={require('../../assets/images/momo/qr-circle.png')}
@@ -211,7 +211,7 @@ export default function MomoHeader() {
           <Animated.View style={[styles.feature, scanViewAnimation]}>
             <Animated.Image
               source={require('../../assets/images/momo/scan.png')}
-              style={[styles.noCircleFeatureIcon, featureIconAnimation]}
+              style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
               source={require('../../assets/images/momo/scan-circle.png')}
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     height: UPPER_HEADER_HEIGHT + UPPER_HEADER_PADDING_TOP,
     paddingTop: UPPER_HEADER_PADDING_TOP,
   },
-  noCircleFeatureIcon: {
+  featureIcon: {
     width: 16,
     height: 16,
     position: 'absolute',
