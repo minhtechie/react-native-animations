@@ -43,31 +43,31 @@ const ReactToMessage = () => {
           <Text style={styles.messageSentTime}>6:09</Text>
         </View>
 
-        <View>
-          <TouchableOpacity
-            style={[styles.reactionButton, styles.loveButton]}
-            activeOpacity={1}
-            onPress={() => {
-              if (timeout.current) {
-                clearTimeout(timeout.current);
-              }
+        <TouchableOpacity
+          style={styles.loveButton}
+          activeOpacity={1}
+          onPress={() => {
+            if (timeout.current) {
+              clearTimeout(timeout.current);
+            }
 
-              setHeartCount(heartCount + 1);
-              setHearts(oldHearts => [...oldHearts, {id: getUniqueID()}]);
+            setHeartCount(heartCount + 1);
+            setHearts(oldHearts => [...oldHearts, {id: getUniqueID()}]);
 
-              timeout.current = setTimeout(() => {
-                Animated.spring(countAnimatedValue, {
-                  toValue: 0,
-                  speed: 48,
-                  useNativeDriver: true,
-                }).start();
-              }, 500);
+            timeout.current = setTimeout(() => {
               Animated.spring(countAnimatedValue, {
-                toValue: -64,
+                toValue: 0,
                 speed: 48,
                 useNativeDriver: true,
               }).start();
-            }}>
+            }, 500);
+            Animated.spring(countAnimatedValue, {
+              toValue: -64,
+              speed: 48,
+              useNativeDriver: true,
+            }).start();
+          }}>
+          <View style={styles.loveCircle}>
             {heartCount ? (
               <Image
                 style={styles.loveIcon}
@@ -79,11 +79,10 @@ const ReactToMessage = () => {
                 source={require('../../assets/images/heart-outline.png')}
               />
             )}
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
         <Animated.View
           style={[
-            styles.reactionButton,
             styles.loveCountCircle,
             {
               transform: [
@@ -144,17 +143,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 4,
   },
-  reactionButton: {
+  loveButton: {
     position: 'absolute',
-    bottom: -8,
-    right: 0,
+    bottom: -16,
+    right: -16,
+    width: 48,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loveButton: {
+  loveCircle: {
     width: 24,
     height: 24,
-    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 16,
     backgroundColor: 'white',
     ...Platform.select({
       android: {elevation: 3},
@@ -174,6 +177,10 @@ const styles = StyleSheet.create({
     height: 12,
   },
   loveCountCircle: {
+    position: 'absolute',
+    bottom: -8,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 32,
     height: 32,
     right: -8,
