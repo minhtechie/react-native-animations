@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.5.0",
     "react": "17.0.2",
     "react-native": "0.66.4",
+    "react-native-actions-sheet": "^0.6.1",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-global-props": "^1.1.5",
     "react-native-linear-gradient": "^2.5.6",

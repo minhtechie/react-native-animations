@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,10 +17,18 @@ import MenuItem from './components/MenuItem';
 import SearchInput from './components/SearchInput';
 import SearchModal from './components/SearchModal';
 import {menu1Data, menu2Data, menu3Data} from '../../data/menuData';
+import {WINDOW_HEIGHT} from '../../utils';
+
+const HEADER_HEIGHT = 120;
 
 export default ({navigation}: any) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const [searchModalVisible, setSearchModalVisible] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(1);
+  const [cords, setCords] = useState([]);
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  const selectRef = useRef<any>({value: 1, silent: false});
 
   const bannerAnimation = {
     transform: [
@@ -64,6 +72,42 @@ export default ({navigation}: any) => {
     }),
   };
 
+  useEffect(() => {
+    const scrollHandler = () => {
+      scrollViewRef?.current?.scrollTo({
+        x: 0,
+        y: cords[selectedValue] + HEADER_HEIGHT,
+        animated: false,
+      });
+    };
+
+    if (
+      selectRef.current.value !== selectedValue &&
+      !selectRef.current.silent
+    ) {
+      scrollHandler();
+    }
+
+    selectRef.current.silent = false;
+    selectRef.current.value = selectedValue;
+  }, [selectedValue, cords]);
+
+  const handleScroll = (event: any) => {
+    const index = Math.round(
+      event.nativeEvent.contentOffset.y /
+        (WINDOW_HEIGHT -
+          HEADER_HEIGHT -
+          selectedValue * 15 -
+          40 -
+          (Platform.OS === 'android' ? 0 : 75)),
+    );
+
+    if (index > 0 && selectedValue !== index) {
+      selectRef.current.silent = true;
+      setSelectedValue(index);
+    }
+  };
+  const _selectedChange = (e: any) => setSelectedValue(e);
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
@@ -72,7 +116,10 @@ export default ({navigation}: any) => {
         style={[styles.searchPlaceholder, searchPlaceholderAnimation]}>
         <SafeAreaView />
         <TouchableOpacity onPress={() => setSearchModalVisible(true)}>
-          <SearchInput editable={false} pointerEvents="none" />
+          <SearchInput
+            selectedValue={selectedValue}
+            selectedChange={_selectedChange}
+          />
         </TouchableOpacity>
       </Animated.View>
       <TouchableOpacity
@@ -106,15 +153,18 @@ export default ({navigation}: any) => {
         />
       </Animated.View>
       <ScrollView
+        ref={scrollViewRef}
         onScroll={Animated.event(
           [
             {
               nativeEvent: {
-                contentOffset: {y: animatedValue},
+                contentOffset: {
+                  y: animatedValue,
+                },
               },
             },
           ],
-          {useNativeDriver: false},
+          {useNativeDriver: false, listener: event => handleScroll(event)},
         )}
         scrollEventThrottle={16}>
         <View style={styles.paddingForBanner} />
@@ -134,18 +184,32 @@ export default ({navigation}: any) => {
             </View>
           </View>
 
-          <Menu title="Recommended Menu">
+          <Menu
+            title="Recommended Menu"
+            id={1}
+            cords={cords}
+            setCords={setCords}>
             {menu1Data.map(item => (
               <MenuItem {...item} key={item.id} />
             ))}
           </Menu>
-          <Menu title="Crispy Chicken">
+          <Menu title="Crispy Chicken" id={2} cords={cords} setCords={setCords}>
             {menu2Data.map(item => (
               <MenuItem {...item} key={item.id} />
             ))}
           </Menu>
-          <Menu title="Dessert">
+          <Menu title="Dessert" id={3} cords={cords} setCords={setCords}>
             {menu3Data.map(item => (
+              <MenuItem {...item} key={item.id} />
+            ))}
+          </Menu>
+          <Menu title="Special Menu" id={4} cords={cords} setCords={setCords}>
+            {menu1Data.map(item => (
+              <MenuItem {...item} key={item.id} />
+            ))}
+          </Menu>
+          <Menu title="Hot Menu" id={5} cords={cords} setCords={setCords}>
+            {menu1Data.map(item => (
               <MenuItem {...item} key={item.id} />
             ))}
           </Menu>
