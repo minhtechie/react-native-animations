@@ -10,69 +10,25 @@ import {
   StatusBar,
   Animated,
 } from 'react-native';
+import {getFeatureViewAnimation} from './utils';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
-const TRANSLATE_X_POINT = 80;
+const UPPER_HEADER_HEIGHT = 32;
+const UPPER_HEADER_PADDING_TOP = 4;
+const LOWER_HEADER_HEIGHT = 96;
+const SCROLL_SNAPPING_THRESHOLD = 20;
 
 export default function MomoHeader() {
   const animatedValue = useRef(new Animated.Value(0)).current;
+  const scrollViewRef = useRef<ScrollView>(null);
+  const lastOffsetY = useRef(0);
+  const scrollDirection = useRef('');
 
-  const translateY = {
-    translateY: animatedValue.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, -50],
-      extrapolate: 'clamp',
-    }),
-  };
-  const depositViewAnimation = {
-    transform: [
-      {
-        translateX: animatedValue.interpolate({
-          inputRange: [0, TRANSLATE_X_POINT],
-          outputRange: [0, 36],
-          extrapolate: 'clamp',
-        }),
-      },
-      translateY,
-    ],
-  };
-  const withdrawViewAnimation = {
-    transform: [
-      {
-        translateX: animatedValue.interpolate({
-          inputRange: [0, TRANSLATE_X_POINT],
-          outputRange: [0, -16],
-          extrapolate: 'clamp',
-        }),
-      },
-      translateY,
-    ],
-  };
-  const qrViewAnimation = {
-    transform: [
-      {
-        translateX: animatedValue.interpolate({
-          inputRange: [0, TRANSLATE_X_POINT],
-          outputRange: [0, -56],
-          extrapolate: 'clamp',
-        }),
-      },
-      translateY,
-    ],
-  };
-  const scanViewAnimation = {
-    transform: [
-      {
-        translateX: animatedValue.interpolate({
-          inputRange: [0, TRANSLATE_X_POINT],
-          outputRange: [0, -92],
-          extrapolate: 'clamp',
-        }),
-      },
-      translateY,
-    ],
-  };
+  const depositViewAnimation = getFeatureViewAnimation(animatedValue, 36);
+  const withdrawViewAnimation = getFeatureViewAnimation(animatedValue, -16);
+  const qrViewAnimation = getFeatureViewAnimation(animatedValue, -56);
+  const scanViewAnimation = getFeatureViewAnimation(animatedValue, -92);
 
   const featureIconCircleAnimation = {
     opacity: animatedValue.interpolate({
@@ -139,11 +95,7 @@ export default function MomoHeader() {
 
       <SafeAreaView style={styles.header}>
         <View style={styles.upperHeader}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-            }}>
+          <View style={styles.searchContainer}>
             <Image
               source={require('../../assets/images/momo/search.png')}
               style={[styles.icon16, {marginLeft: 8}]}
@@ -226,16 +178,23 @@ export default function MomoHeader() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {y: animatedValue},
-              },
-            },
-          ],
-          {useNativeDriver: false},
-        )}
+        ref={scrollViewRef}
+        onScroll={e => {
+          const offsetY = e.nativeEvent.contentOffset.y;
+          scrollDirection.current =
+            offsetY - lastOffsetY.current > 0 ? 'down' : 'up';
+          lastOffsetY.current = offsetY;
+          animatedValue.setValue(offsetY);
+        }}
+        onScrollEndDrag={e => {
+          const offsetY = e.nativeEvent.contentOffset.y;
+          if (offsetY > SCROLL_SNAPPING_THRESHOLD) {
+            scrollViewRef.current?.scrollTo({
+              y: scrollDirection.current === 'down' ? 100 : 0,
+              animated: true,
+            });
+          }
+        }}
         scrollEventThrottle={16}>
         <View style={styles.spaceForHeader} />
         <View style={{height: 815, backgroundColor: 'white'}} />
@@ -243,9 +202,7 @@ export default function MomoHeader() {
     </View>
   );
 }
-const UPPER_HEADER_HEIGHT = 32;
-const UPPER_HEADER_PADDING_TOP = 4;
-const LOWER_HEADER_HEIGHT = 96;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -273,6 +230,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     height: UPPER_HEADER_HEIGHT + UPPER_HEADER_PADDING_TOP,
     paddingTop: UPPER_HEADER_PADDING_TOP,
+  },
+  searchContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   featureIcon: {
     width: 16,
