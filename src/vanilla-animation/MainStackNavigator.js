@@ -15,6 +15,7 @@ import TikTokTabNavigator from './TikTok/TikTokTabNavigator';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 import MoMoHeader from './MomoHeader/MomoHeader';
+import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,11 @@ export default () => (
       <Stack.Screen
         name="AnimatedList"
         component={AnimatedList}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="AnimatedBannerWithSearchInput"
+        component={AnimatedBannerWithSearchInput}
         options={{header: () => null}}
       />
       <Stack.Screen name="Tinder" component={Tinder} />
@@ -99,6 +105,10 @@ const HomeScreen = ({navigation}: any) => {
       <MenuItem
         onPress={() => navigate('AnimatedList')}
         label="Animated List"
+      />
+      <MenuItem
+        onPress={() => navigate('AnimatedBannerWithSearchInput')}
+        label="Animated Banner with Search Input"
       />
       <MenuItem
         onPress={() => navigate('DraggableBottomSheet')}
