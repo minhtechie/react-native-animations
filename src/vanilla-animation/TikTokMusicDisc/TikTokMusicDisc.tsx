@@ -101,11 +101,11 @@ export default function TikTokMusicDisc() {
     <View style={[styles.container]}>
       <View>
         <Animated.Image
-          source={require('../../assets/images/tiktok/floating-music-note.png')}
+          source={require('../../assets/images/music-note.png')}
           style={[styles.floatingMusicNote, musicNoteAnimation1]}
         />
         <Animated.Image
-          source={require('../../assets/images/tiktok/floating-music-note.png')}
+          source={require('../../assets/images/music-note.png')}
           style={[styles.floatingMusicNote, musicNoteAnimation2]}
         />
         <Animated.Image

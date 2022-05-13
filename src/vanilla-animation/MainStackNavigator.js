@@ -11,7 +11,6 @@ import ZoomableImage from './ZoomableImage/ZoomableImage';
 import SwipeableList from './SwipeableList/SwipeableList';
 import CubeCarousel from './CubeCarousel/CubeCarousel';
 import PickPhoneColor from './PickPhoneColor/PickPhoneColor';
-import TikTokTabNavigator from './TikTok/TikTokTabNavigator';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 import MoMoHeader from './MomoHeader/MomoHeader';
@@ -73,11 +72,6 @@ export default () => (
         options={{title: 'TikTok Music Disc'}}
       />
       <Stack.Screen
-        name="TikTokTabNavigator"
-        component={TikTokTabNavigator}
-        options={{header: () => null}}
-      />
-      <Stack.Screen
         name="ReactToMessage"
         component={ReactToMessage}
         options={{title: 'React To Message'}}
@@ -137,7 +131,6 @@ const HomeScreen = ({navigation}: any) => {
         onPress={() => navigate('CubeCarousel')}
         label="Cube Carousel"
       />
-      <MenuItem onPress={() => navigate('TikTokTabNavigator')} label="TikTok" />
       <MenuItem
         onPress={() => navigate('TikTokMusicDisc')}
         label="TikTok Music Disc"
