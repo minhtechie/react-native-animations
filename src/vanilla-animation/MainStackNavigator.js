@@ -16,6 +16,7 @@ import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 import MoMoHeader from './MomoHeader/MomoHeader';
 import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
+import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +66,11 @@ export default () => (
         name="CubeCarousel"
         component={CubeCarousel}
         options={{title: 'Cube Carousel'}}
+      />
+      <Stack.Screen
+        name="TikTokMusicDisc"
+        component={TikTokMusicDisc}
+        options={{title: 'TikTok Music Disc'}}
       />
       <Stack.Screen
         name="TikTokTabNavigator"
@@ -132,6 +138,10 @@ const HomeScreen = ({navigation}: any) => {
         label="Cube Carousel"
       />
       <MenuItem onPress={() => navigate('TikTokTabNavigator')} label="TikTok" />
+      <MenuItem
+        onPress={() => navigate('TikTokMusicDisc')}
+        label="TikTok Music Disc"
+      />
       <MenuItem
         onPress={() => navigate('ReactToMessage')}
         label="React To Message"
