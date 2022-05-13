@@ -15,6 +15,7 @@ import TikTokTabNavigator from './TikTok/TikTokTabNavigator';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 import MoMoHeader from './MomoHeader/MomoHeader';
+import ZingCarousel from './Zing/ZingCarousel';
 
 const Stack = createNativeStackNavigator();
 
@@ -80,6 +81,11 @@ export default () => (
         component={MoMoHeader}
         options={{header: () => null}}
       />
+      <Stack.Screen
+        name="ZingCarousel"
+        component={ZingCarousel}
+        options={{header: () => null}}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );
@@ -131,6 +137,7 @@ const HomeScreen = ({navigation}: any) => {
         label="Double Tap To Heart"
       />
       <MenuItem onPress={() => navigate('MoMoHeader')} label="MoMo Header" />
+      <MenuItem onPress={() => navigate('ZingCarousel')} label="ZingCarousel" />
     </SafeAreaView>
   );
 };
