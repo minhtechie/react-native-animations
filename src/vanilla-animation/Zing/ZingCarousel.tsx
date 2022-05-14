@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,12 +9,17 @@ import {
   TextInput,
   StatusBar,
   Animated,
-  Platform,
+  TouchableOpacity,
+  FlatList,
 } from 'react-native';
-import {menu1Data, menu2Data} from '../../data/menuData';
+import {musicData} from '../../data/musicData';
 
 const ZingCarousel = () => {
   const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
+  const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+  const [activeImage, setActiveImage] = useState<string>(musicData[0].image);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const currentRef = useRef<FlatList>(null);
   const animatedValue = useRef(new Animated.Value(0)).current;
   const translateY = {
     translateY: animatedValue.interpolate({
@@ -44,11 +49,29 @@ const ZingCarousel = () => {
       },
     ],
   };
+
+  const textAnimation = {
+    opacity: animatedValue.interpolate({
+      inputRange: [0, 100],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    }),
+  };
+
+  useEffect(() => {
+    currentRef.current?.scrollToIndex({
+      index: activeIndex,
+      animated: true,
+      viewOffset: 60,
+      viewPosition: 0.3,
+    });
+  }, [activeIndex]);
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
       <Animated.Image
-        source={require('../../assets/images/zing/chill.jpeg')}
+        source={activeImage}
         style={[
           {
             width: '100%',
@@ -64,7 +87,7 @@ const ZingCarousel = () => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: 16,
+            paddingHorizontal: 32,
             justifyContent: 'space-around',
           }}>
           <View style={{flex: 1}}>
@@ -77,17 +100,20 @@ const ZingCarousel = () => {
             />
           </View>
           <View style={{flex: 3}}>
-            <TextInput
+            <AnimatedTextInput
               placeholder="Tìm kiếm bài hát,playlist...."
               placeholderTextColor="white"
-              style={{
-                backgroundColor: 'rgba(255, 255, 255,0.4)',
-                fontSize: 12,
-                color: 'white',
-                borderRadius: 20,
-                paddingVertical: 4,
-                paddingLeft: 32,
-              }}
+              style={[
+                {
+                  backgroundColor: 'rgba(255, 255, 255,0.4)',
+                  fontSize: 12,
+                  color: 'white',
+                  borderRadius: 20,
+                  paddingVertical: 4,
+                  paddingLeft: 32,
+                },
+                textAnimation,
+              ]}
             />
           </View>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
@@ -129,16 +155,34 @@ const ZingCarousel = () => {
             style={{
               height: 600,
             }}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {menu1Data.concat(menu2Data).map(item => {
+            <FlatList
+              horizontal
+              initialScrollIndex={activeIndex}
+              showsHorizontalScrollIndicator={false}
+              ref={currentRef}
+              onScrollToIndexFailed={info => {
+                const wait = new Promise(resolve => setTimeout(resolve, 500));
+                wait.then(() => {
+                  currentRef.current?.scrollToIndex({
+                    index: info.index,
+                    animated: true,
+                  });
+                });
+              }}
+              data={musicData}
+              renderItem={({item, index}) => {
                 return (
-                  <View
+                  <TouchableOpacity
                     style={{
                       width: 80,
                       height: 80,
                       marginRight: 4,
                       justifyContent: 'center',
                       alignItems: 'center',
+                    }}
+                    onPress={() => {
+                      setActiveImage(item.image);
+                      setActiveIndex(index);
                     }}>
                     <Image
                       source={item.image}
@@ -154,22 +198,24 @@ const ZingCarousel = () => {
                     <View
                       style={{
                         position: 'absolute',
-                        top: 70,
+                        top: 72,
                         backgroundColor: 'red',
                       }}>
                       <Text
                         style={{
                           color: 'white',
-                          fontSize: 10,
-                          fontWeight:'bold'
+                          fontSize: 8,
+                          fontWeight: 'bold',
+                          padding: 1,
                         }}>
                         LIVE
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 );
-              })}
-            </ScrollView>
+              }}
+              keyExtractor={item => item.image}
+            />
           </View>
         </View>
       </ScrollView>

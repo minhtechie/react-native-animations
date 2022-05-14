@@ -1,0 +1,62 @@
+export const musicData = [
+  {
+    id: '0',
+    name: '2 pc Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    image: require('../assets/images/zing/img_1.jpeg'),
+  },
+  {
+    id: '1',
+    name: '2 pc Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    image: require('../assets/images/zing/img_2.jpeg'),
+  },
+  {
+    id: '2',
+    name: '2 pc Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    image: require('../assets/images/zing/img_3.jpeg'),
+  },
+  {
+    id: '3',
+    name: '4 pc Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    price: 10,
+    image: require('../assets/images/zing/img_5.jpeg'),
+  },
+  {
+    id: '4',
+    name: '2 Spicy Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    price: 10,
+    image: require('../assets/images/zing/img_6.jpeg'),
+  },
+  {
+    id: '5',
+    name: '2 Spicy Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    price: 10,
+    image: require('../assets/images/zing/img_7.jpeg'),
+  },
+  {
+    id: '6',
+    name: '2 Spicy Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    price: 10,
+    image: require('../assets/images/zing/img_8.jpeg'),
+  },
+  {
+    id: '7',
+    name: '2 Spicy Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    price: 10,
+    image: require('../assets/images/zing/img_9.jpeg'),
+  },
+  {
+    id: '8',
+    name: '2 Spicy Chickenjoy',
+    description: 'Our signature Chickenjoy fried chicken served with 1 side',
+    price: 10,
+    image: require('../assets/images/zing/img_10.jpeg'),
+  },
+];
