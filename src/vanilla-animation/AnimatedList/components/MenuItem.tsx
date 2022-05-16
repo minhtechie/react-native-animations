@@ -25,6 +25,13 @@ export default ({
   description,
   style,
 }: MenuItemProps) => {
+
+  const formatPrice = () => {
+    const result = price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+
+    return result.replace('VND', 'đ');
+  };
+
   return (
     <TouchableOpacity style={[styles.container, style]}>
       <Image source={image} style={styles.image} />
@@ -33,7 +40,7 @@ export default ({
           <Text style={styles.dishName}>{name}</Text>
           <Text style={styles.description}>{description}</Text>
         </View>
-        <Text style={styles.price}>${price}</Text>
+        <Text style={styles.price}>{formatPrice()}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -54,9 +61,11 @@ const styles = StyleSheet.create({
   dishInfo: {
     flex: 1,
     flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   dishName: {
-    fontSize: 16,
+    fontSize: 14,
+    fontWeight: '600',
     color: '#333',
     marginBottom: 8,
   },
@@ -66,8 +75,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   price: {
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#FE4A00',
+    color: '#222222',
   },
 });

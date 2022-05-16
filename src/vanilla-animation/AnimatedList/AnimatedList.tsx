@@ -134,18 +134,18 @@ export default ({navigation}: any) => {
             </View>
           </View>
 
-          <Menu title="Recommended Menu">
+          <Menu title="Chill Phút Dừng - Tặng 1 lon Strongbow">
             {menu1Data.map(item => (
               <MenuItem {...item} key={item.id} />
             ))}
           </Menu>
-          <Menu title="Crispy Chicken">
-            {menu2Data.map(item => (
+          <Menu title="Chill Phút Dừng - Tặng 1 lon Strongbow">
+            {menu1Data.map(item => (
               <MenuItem {...item} key={item.id} />
             ))}
           </Menu>
-          <Menu title="Dessert">
-            {menu3Data.map(item => (
+          <Menu title="Chill Phút Dừng - Tặng 1 lon Strongbow">
+            {menu1Data.map(item => (
               <MenuItem {...item} key={item.id} />
             ))}
           </Menu>
