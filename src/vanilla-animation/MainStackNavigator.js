@@ -11,11 +11,12 @@ import ZoomableImage from './ZoomableImage/ZoomableImage';
 import SwipeableList from './SwipeableList/SwipeableList';
 import CubeCarousel from './CubeCarousel/CubeCarousel';
 import PickPhoneColor from './PickPhoneColor/PickPhoneColor';
-import TikTokTabNavigator from './TikTok/TikTokTabNavigator';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 import MoMoHeader from './MomoHeader/MomoHeader';
 import ZingCarousel from './Zing/ZingCarousel';
+import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
+import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,11 @@ export default () => (
       <Stack.Screen
         name="AnimatedList"
         component={AnimatedList}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="AnimatedBannerWithSearchInput"
+        component={AnimatedBannerWithSearchInput}
         options={{header: () => null}}
       />
       <Stack.Screen name="Tinder" component={Tinder} />
@@ -62,9 +68,9 @@ export default () => (
         options={{title: 'Cube Carousel'}}
       />
       <Stack.Screen
-        name="TikTokTabNavigator"
-        component={TikTokTabNavigator}
-        options={{header: () => null}}
+        name="TikTokMusicDisc"
+        component={TikTokMusicDisc}
+        options={{title: 'TikTok Music Disc'}}
       />
       <Stack.Screen
         name="ReactToMessage"
@@ -107,6 +113,10 @@ const HomeScreen = ({navigation}: any) => {
         label="Animated List"
       />
       <MenuItem
+        onPress={() => navigate('AnimatedBannerWithSearchInput')}
+        label="Animated Banner with Search Input"
+      />
+      <MenuItem
         onPress={() => navigate('DraggableBottomSheet')}
         label="Draggable Bottom Sheet"
       />
@@ -127,7 +137,10 @@ const HomeScreen = ({navigation}: any) => {
         onPress={() => navigate('CubeCarousel')}
         label="Cube Carousel"
       />
-      <MenuItem onPress={() => navigate('TikTokTabNavigator')} label="TikTok" />
+      <MenuItem
+        onPress={() => navigate('TikTokMusicDisc')}
+        label="TikTok Music Disc"
+      />
       <MenuItem
         onPress={() => navigate('ReactToMessage')}
         label="React To Message"
