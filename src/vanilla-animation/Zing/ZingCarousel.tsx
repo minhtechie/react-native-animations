@@ -72,58 +72,43 @@ const ZingCarousel = () => {
       <StatusBar barStyle={'light-content'} />
       <Animated.Image
         source={activeImage}
-        style={[
-          {
-            width: '100%',
-            height: 400,
-            position: 'absolute',
-            resizeMode: 'cover',
-          },
-          bannerAnimation,
-        ]}
+        style={[styles.bannerMusic, bannerAnimation]}
       />
       <AnimatedSafeArea style={[depositViewAnimation]}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: 32,
-            justifyContent: 'space-around',
-          }}>
+        <View style={styles.boxHeader}>
           <View style={{flex: 1}}>
             <Image
               source={require('../../assets/images/user.png')}
+              style={styles.userIcon}
+            />
+          </View>
+          <View style={styles.boxSearchInput}>
+            <View
               style={{
-                width: 20,
-                height: 20,
-              }}
-            />
+                flex: 1,
+                justifyContent: 'center',
+              }}>
+              <Image
+                source={require('../../assets/images/momo/search.png')}
+                style={styles.searchIcon}
+              />
+              <AnimatedTextInput
+                placeholder="Bài hát, playlist, nghệ sĩ..."
+                placeholderTextColor="rgba(255, 255, 255, 0.8)"
+                style={[styles.searchInput]}
+              />
+            </View>
+            <View style={styles.boxMircro}>
+              <Image
+                source={require('../../assets/images/zing/micro.png')}
+                style={styles.mircoIcon}
+              />
+            </View>
           </View>
-          <View style={{flex: 3}}>
-            <AnimatedTextInput
-              placeholder="Tìm kiếm bài hát,playlist...."
-              placeholderTextColor="white"
-              style={[
-                {
-                  backgroundColor: 'rgba(255, 255, 255,0.4)',
-                  fontSize: 12,
-                  color: 'white',
-                  borderRadius: 20,
-                  paddingVertical: 4,
-                  paddingLeft: 32,
-                },
-                textAnimation,
-              ]}
-            />
-          </View>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
+          <View style={styles.boxBell}>
             <Image
               source={require('../../assets/images/momo/bell.png')}
-              style={{
-                width: 20,
-                height: 20,
-                tintColor: 'white',
-              }}
+              style={styles.bellIcon}
             />
           </View>
         </View>
@@ -144,7 +129,7 @@ const ZingCarousel = () => {
         scrollEventThrottle={16}>
         <View
           style={{
-            paddingTop: 300,
+            paddingTop: 150,
           }}
         />
         <View
@@ -173,43 +158,17 @@ const ZingCarousel = () => {
               renderItem={({item, index}) => {
                 return (
                   <TouchableOpacity
-                    style={{
-                      width: 80,
-                      height: 80,
-                      marginRight: 4,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
+                    style={styles.boxLiveMusic}
                     onPress={() => {
                       setActiveImage(item.image);
                       setActiveIndex(index);
                     }}>
                     <Image
                       source={item.image}
-                      style={{
-                        borderRadius: 60,
-                        width: 80,
-                        height: 80,
-                        borderWidth: 2,
-                        borderColor: 'red',
-                        position: 'relative',
-                      }}
+                      style={styles.imageLiveMusicItem}
                     />
-                    <View
-                      style={{
-                        position: 'absolute',
-                        top: 72,
-                        backgroundColor: 'red',
-                      }}>
-                      <Text
-                        style={{
-                          color: 'white',
-                          fontSize: 8,
-                          fontWeight: 'bold',
-                          padding: 1,
-                        }}>
-                        LIVE
-                      </Text>
+                    <View style={styles.borderLiveMusicItem}>
+                      <Text style={styles.liveMusicItemLiveTitle}>LIVE</Text>
                     </View>
                   </TouchableOpacity>
                 );
@@ -227,6 +186,90 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  bannerMusic: {
+    width: '100%',
+    height: 400,
+    position: 'absolute',
+    resizeMode: 'cover',
+  },
+  boxHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 32,
+    justifyContent: 'space-around',
+  },
+  userIcon: {
+    width: 20,
+    height: 20,
+    tintColor: 'white',
+  },
+  boxSearchInput: {
+    flex: 4,
+    flexDirection: 'row',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 60,
+    paddingVertical: 4,
+  },
+  searchIcon: {
+    width: 16,
+    height: 16,
+    marginLeft: 8,
+  },
+  searchInput: {
+    position: 'absolute',
+    width: '100%',
+    color: 'white',
+    paddingVertical: 4,
+    paddingLeft: 32,
+    fontSize: 12,
+  },
+  boxMircro: {
+    backgroundColor: '#1e90ff',
+    borderRadius: 60,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 4,
+    marginLeft: 4,
+  },
+  mircoIcon: {
+    width: 20,
+    height: 20,
+    tintColor: 'white',
+  },
+  boxBell: {flex: 1, alignItems: 'flex-end'},
+  bellIcon: {
+    width: 20,
+    height: 20,
+    tintColor: 'white',
+  },
+  boxLiveMusic: {
+    width: 80,
+    height: 80,
+    marginRight: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageLiveMusicItem: {
+    borderRadius: 60,
+    width: 80,
+    height: 80,
+    borderWidth: 2,
+    borderColor: 'red',
+    position: 'relative',
+  },
+  borderLiveMusicItem: {
+    position: 'absolute',
+    top: 72,
+    backgroundColor: 'red',
+  },
+  liveMusicItemLiveTitle: {
+    color: 'white',
+    fontSize: 8,
+    fontWeight: 'bold',
+    padding: 1,
   },
 });
 export default ZingCarousel;
