@@ -235,8 +235,8 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   mircoIcon: {
-    width: 20,
-    height: 20,
+    width: 16,
+    height: 16,
     tintColor: 'white',
   },
   boxBell: {flex: 1, alignItems: 'flex-end'},
