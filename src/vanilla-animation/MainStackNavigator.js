@@ -1,9 +1,7 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, TouchableOpacity, Text} from 'react-native';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import AnimatedList from './AnimatedList/AnimatedList';
 import DraggableBottomSheet from './DraggableBottomSheet/DraggableBottomSheet';
 import Tinder from './Tinder/Tinder';
@@ -14,7 +12,7 @@ import PickPhoneColor from './PickPhoneColor/PickPhoneColor';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 import MoMoHeader from './MomoHeader/MomoHeader';
-import ZingCarousel from './Zing/ZingCarousel';
+import ZingCarousel from './ZingCarousel/ZingCarousel';
 import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
 import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
 

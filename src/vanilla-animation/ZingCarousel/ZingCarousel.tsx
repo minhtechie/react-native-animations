@@ -11,6 +11,7 @@ import {
   Animated,
   TouchableOpacity,
   FlatList,
+  Platform,
 } from 'react-native';
 import {musicData} from '../../data/musicData';
 
@@ -64,7 +65,10 @@ const ZingCarousel = () => {
       <StatusBar barStyle={'light-content'} />
       <Animated.Image
         source={activeImage}
-        style={[styles.bannerMusic, bannerAnimation]}
+        style={[
+          styles.bannerMusic,
+          Platform.OS === 'android' && bannerAnimation,
+        ]}
       />
       <AnimatedSafeArea style={[headerAnimation]}>
         <View style={styles.boxHeader}>
@@ -119,19 +123,12 @@ const ZingCarousel = () => {
           {useNativeDriver: false},
         )}
         scrollEventThrottle={16}>
-        <View
-          style={{
-            paddingTop: 150,
-          }}
-        />
+        <View style={styles.spaceTop} />
         <View
           style={{
             backgroundColor: 'white',
           }}>
-          <View
-            style={{
-              height: 600,
-            }}>
+          <View style={styles.boxContent}>
             <FlatList
               horizontal
               initialScrollIndex={activeIndex}
@@ -237,6 +234,9 @@ const styles = StyleSheet.create({
     height: 20,
     tintColor: 'white',
   },
+  boxContent: {
+    height: 600,
+  },
   boxLiveMusic: {
     width: 80,
     height: 80,
@@ -262,6 +262,9 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontWeight: 'bold',
     padding: 1,
+  },
+  spaceTop: {
+    paddingTop: 150,
   },
 });
 export default ZingCarousel;
