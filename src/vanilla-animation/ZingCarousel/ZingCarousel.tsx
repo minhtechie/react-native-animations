@@ -72,18 +72,14 @@ const ZingCarousel = () => {
       />
       <AnimatedSafeArea style={[headerAnimation]}>
         <View style={styles.boxHeader}>
-          <View style={{flex: 1}}>
+          <View style={styles.boxUser}>
             <Image
               source={require('../../assets/images/user.png')}
               style={styles.userIcon}
             />
           </View>
           <View style={styles.boxSearchInput}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-              }}>
+            <View style={styles.boxSearchIconAndSearchInput}>
               <Image
                 source={require('../../assets/images/momo/search.png')}
                 style={styles.searchIcon}
@@ -124,47 +120,43 @@ const ZingCarousel = () => {
         )}
         scrollEventThrottle={16}>
         <View style={styles.spaceTop} />
-        <View
-          style={{
-            backgroundColor: 'white',
-          }}>
-          <View style={styles.boxContent}>
-            <FlatList
-              horizontal
-              initialScrollIndex={activeIndex}
-              showsHorizontalScrollIndicator={false}
-              ref={currentRef}
-              onScrollToIndexFailed={info => {
-                const wait = new Promise(resolve => setTimeout(resolve, 500));
-                wait.then(() => {
-                  currentRef.current?.scrollToIndex({
-                    index: info.index,
-                    animated: true,
-                  });
+
+        <View style={styles.boxContent}>
+          <FlatList
+            horizontal
+            initialScrollIndex={activeIndex}
+            showsHorizontalScrollIndicator={false}
+            ref={currentRef}
+            onScrollToIndexFailed={info => {
+              const wait = new Promise(resolve => setTimeout(resolve, 500));
+              wait.then(() => {
+                currentRef.current?.scrollToIndex({
+                  index: info.index,
+                  animated: true,
                 });
-              }}
-              data={musicData}
-              renderItem={({item, index}) => {
-                return (
-                  <TouchableOpacity
-                    style={styles.boxLiveMusic}
-                    onPress={() => {
-                      setActiveImage(item.image);
-                      setActiveIndex(index);
-                    }}>
-                    <Image
-                      source={item.image}
-                      style={styles.imageLiveMusicItem}
-                    />
-                    <View style={styles.borderLiveMusicItem}>
-                      <Text style={styles.liveMusicItemLiveTitle}>LIVE</Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }}
-              keyExtractor={item => item.image}
-            />
-          </View>
+              });
+            }}
+            data={musicData}
+            renderItem={({item, index}) => {
+              return (
+                <TouchableOpacity
+                  style={styles.boxLiveMusic}
+                  onPress={() => {
+                    setActiveImage(item.image);
+                    setActiveIndex(index);
+                  }}>
+                  <Image
+                    source={item.image}
+                    style={styles.imageLiveMusicItem}
+                  />
+                  <View style={styles.borderLiveMusicItem}>
+                    <Text style={styles.liveMusicItemLiveTitle}>LIVE</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={item => item.image}
+          />
         </View>
       </ScrollView>
     </View>
@@ -188,10 +180,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     justifyContent: 'space-around',
   },
+  boxUser: {flex: 1},
   userIcon: {
     width: 20,
     height: 20,
     tintColor: 'white',
+  },
+  boxSearchIconAndSearchInput: {
+    flex: 1,
+    justifyContent: 'center',
   },
   boxSearchInput: {
     flex: 4,
@@ -236,6 +233,7 @@ const styles = StyleSheet.create({
   },
   boxContent: {
     height: 600,
+    backgroundColor: 'white',
   },
   boxLiveMusic: {
     width: 80,
