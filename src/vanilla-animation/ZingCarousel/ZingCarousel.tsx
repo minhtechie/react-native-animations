@@ -29,7 +29,7 @@ const ZingCarousel = () => {
     }),
   };
 
-  const depositViewAnimation = {
+  const headerAnimation = {
     transform: [translateY],
     opacity: animatedValue.interpolate({
       inputRange: [0, 100],
@@ -50,14 +50,6 @@ const ZingCarousel = () => {
     ],
   };
 
-  const textAnimation = {
-    opacity: animatedValue.interpolate({
-      inputRange: [0, 100],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    }),
-  };
-
   useEffect(() => {
     currentRef.current?.scrollToIndex({
       index: activeIndex,
@@ -74,7 +66,7 @@ const ZingCarousel = () => {
         source={activeImage}
         style={[styles.bannerMusic, bannerAnimation]}
       />
-      <AnimatedSafeArea style={[depositViewAnimation]}>
+      <AnimatedSafeArea style={[headerAnimation]}>
         <View style={styles.boxHeader}>
           <View style={{flex: 1}}>
             <Image
