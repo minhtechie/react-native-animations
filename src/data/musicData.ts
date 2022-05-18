@@ -1,38 +1,38 @@
 export const musicData = [
   {
     id: '0',
-    image: require('../assets/images/zing/img_1.jpeg'),
+    image: require('../assets/images/zing/rap.png'),
   },
   {
     id: '1',
-    image: require('../assets/images/zing/img_2.jpeg'),
+    image: require('../assets/images/zing/usuk.png'),
   },
   {
     id: '2',
-    image: require('../assets/images/zing/img_3.jpeg'),
+    image: require('../assets/images/zing/aucotis.png'),
   },
   {
     id: '3',
-    image: require('../assets/images/zing/img_5.jpeg'),
+    image: require('../assets/images/zing/kpop.png'),
   },
   {
     id: '4',
-    image: require('../assets/images/zing/img_6.jpeg'),
+    image: require('../assets/images/zing/chill.png'),
   },
   {
     id: '5',
-    image: require('../assets/images/zing/img_7.jpeg'),
+    image: require('../assets/images/zing/bolero.png'),
   },
   {
     id: '6',
-    image: require('../assets/images/zing/img_8.jpeg'),
+    image: require('../assets/images/zing/oneair.png'),
   },
   {
     id: '7',
-    image: require('../assets/images/zing/img_9.jpeg'),
+    image: require('../assets/images/zing/vpop.png'),
   },
   {
     id: '8',
-    image: require('../assets/images/zing/img_10.jpeg'),
+    image: require('../assets/images/zing/xone.png'),
   },
 ];
