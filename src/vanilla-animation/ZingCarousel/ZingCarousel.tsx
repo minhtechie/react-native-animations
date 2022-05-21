@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,69 +8,26 @@ import {
   SafeAreaView,
   TextInput,
   StatusBar,
-  Animated,
   TouchableOpacity,
   FlatList,
-  Platform,
 } from 'react-native';
 import {musicData} from '../../data/musicData';
+import MusicLiveModal from './component/MusicLiveModal';
 
 const ZingCarousel = () => {
-  const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
-  const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
-  const [activeImage, setActiveImage] = useState<string>(musicData[0].image);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const currentRef = useRef<FlatList>(null);
-  const animatedValue = useRef(new Animated.Value(0)).current;
-  const translateY = {
-    translateY: animatedValue.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, -50],
-      extrapolate: 'clamp',
-    }),
+  const [activeImageBanner, setActiveImageBanner] = useState<string>(
+    musicData[0].image,
+  );
+  const [visible, setVisible] = useState<boolean>(false);
+  const onClose = () => {
+    setVisible(!visible);
   };
-
-  const headerAnimation = {
-    transform: [translateY],
-    opacity: animatedValue.interpolate({
-      inputRange: [0, 100],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    }),
-  };
-
-  const bannerAnimation = {
-    transform: [
-      {
-        scale: animatedValue.interpolate({
-          inputRange: [-200, 0],
-          outputRange: [2, 1],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-  };
-
-  useEffect(() => {
-    currentRef.current?.scrollToIndex({
-      index: activeIndex,
-      animated: true,
-      viewOffset: 60,
-      viewPosition: 0.3,
-    });
-  }, [activeIndex]);
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
-      <Animated.Image
-        source={activeImage}
-        style={[
-          styles.bannerMusic,
-          Platform.OS === 'android' && bannerAnimation,
-        ]}
-      />
-      <AnimatedSafeArea style={[headerAnimation]}>
+      <Image source={activeImageBanner} style={styles.bannerMusic} />
+      <SafeAreaView>
         <View style={styles.boxHeader}>
           <View style={styles.boxUser}>
             <Image
@@ -84,10 +41,10 @@ const ZingCarousel = () => {
                 source={require('../../assets/images/momo/search.png')}
                 style={styles.searchIcon}
               />
-              <AnimatedTextInput
+              <TextInput
                 placeholder="Bài hát, playlist, nghệ sĩ..."
                 placeholderTextColor="rgba(255, 255, 255, 0.8)"
-                style={[styles.searchInput]}
+                style={styles.searchInput}
               />
             </View>
             <View style={styles.boxMircro}>
@@ -104,46 +61,22 @@ const ZingCarousel = () => {
             />
           </View>
         </View>
-      </AnimatedSafeArea>
+      </SafeAreaView>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {y: animatedValue},
-              },
-            },
-          ],
-          {useNativeDriver: false},
-        )}
-        scrollEventThrottle={16}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.spaceTop} />
-
         <View style={styles.boxContent}>
           <FlatList
             horizontal
-            initialScrollIndex={activeIndex}
             showsHorizontalScrollIndicator={false}
-            ref={currentRef}
-            onScrollToIndexFailed={info => {
-              const wait = new Promise(resolve => setTimeout(resolve, 500));
-              wait.then(() => {
-                currentRef.current?.scrollToIndex({
-                  index: info.index,
-                  animated: true,
-                });
-              });
-            }}
             data={musicData}
             renderItem={({item, index}) => {
               return (
                 <TouchableOpacity
                   style={styles.boxLiveMusic}
                   onPress={() => {
-                    setActiveImage(item.image);
-                    setActiveIndex(index);
+                    setActiveImageBanner(item.bannerImage);
+                    setVisible(true);
                   }}>
                   <Image
                     source={item.image}
@@ -159,6 +92,11 @@ const ZingCarousel = () => {
           />
         </View>
       </ScrollView>
+      <MusicLiveModal
+        visible={visible}
+        onClose={onClose}
+        imageBanner={activeImageBanner}
+      />
     </View>
   );
 };
