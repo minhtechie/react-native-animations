@@ -12,16 +12,11 @@ import {
   FlatList,
 } from 'react-native';
 import {musicData} from '../../data/musicData';
-import MusicLiveModal from './component/MusicLiveModal';
 
 const ZingCarousel = () => {
   const [activeImageBanner, setActiveImageBanner] = useState<string>(
     musicData[0].image,
   );
-  const [visible, setVisible] = useState<boolean>(false);
-  const onClose = () => {
-    setVisible(!visible);
-  };
 
   return (
     <View style={styles.container}>
@@ -76,7 +71,6 @@ const ZingCarousel = () => {
                   style={styles.boxLiveMusic}
                   onPress={() => {
                     setActiveImageBanner(item.bannerImage);
-                    setVisible(true);
                   }}>
                   <Image
                     source={item.image}
@@ -92,11 +86,6 @@ const ZingCarousel = () => {
           />
         </View>
       </ScrollView>
-      <MusicLiveModal
-        visible={visible}
-        onClose={onClose}
-        imageBanner={activeImageBanner}
-      />
     </View>
   );
 };
