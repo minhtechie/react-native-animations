@@ -1,5 +1,6 @@
 import {Platform, StyleSheet} from 'react-native';
 
+export const EMOJIS_CONTAINER_HEIGHT = 192;
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -65,7 +66,7 @@ export default StyleSheet.create({
     left: 32,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: 150,
+    width: EMOJIS_CONTAINER_HEIGHT,
     borderRadius: 16,
     padding: 4,
     backgroundColor: 'white',

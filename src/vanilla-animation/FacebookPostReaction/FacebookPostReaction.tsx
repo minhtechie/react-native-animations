@@ -8,22 +8,88 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import styles from './facebookStyles';
+import styles, {EMOJIS_CONTAINER_HEIGHT, EMOJI_SIZE} from './facebookStyles';
 
 const FacebookPostReaction = () => {
   const [showEmojis, setShowEmojis] = useState(false);
+
+  const animatedValue = useRef(new Animated.Value(0)).current;
+  const likeAnimatedValue = useRef(new Animated.Value(1)).current;
+  const loveAnimatedValue = useRef(new Animated.Value(1)).current;
+  const hahaAnimatedValue = useRef(new Animated.Value(1)).current;
+  const wowAnimatedValue = useRef(new Animated.Value(1)).current;
+  const sadAnimatedValue = useRef(new Animated.Value(1)).current;
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (event, gesture) => {
-        console.log(gesture.dx);
-        // animatedValue.setValue(gesture.dx);
+        const moveX = gesture.moveX;
+        if (moveX >= 0 && moveX < 200) {
+          const index = Math.floor(moveX / (EMOJIS_CONTAINER_HEIGHT / 5));
+          switch (index) {
+            case 1: {
+              likeAnimatedValue.setValue(2);
+              loveAnimatedValue.setValue(1);
+              hahaAnimatedValue.setValue(1);
+              wowAnimatedValue.setValue(1);
+              sadAnimatedValue.setValue(1);
+              break;
+            }
+            case 2: {
+              likeAnimatedValue.setValue(1);
+              loveAnimatedValue.setValue(2);
+              hahaAnimatedValue.setValue(1);
+              wowAnimatedValue.setValue(1);
+              sadAnimatedValue.setValue(1);
+              break;
+            }
+            case 3: {
+              likeAnimatedValue.setValue(1);
+              loveAnimatedValue.setValue(1);
+              hahaAnimatedValue.setValue(2);
+              wowAnimatedValue.setValue(1);
+              sadAnimatedValue.setValue(1);
+              break;
+            }
+            case 4: {
+              likeAnimatedValue.setValue(1);
+              loveAnimatedValue.setValue(1);
+              hahaAnimatedValue.setValue(1);
+              wowAnimatedValue.setValue(2);
+              sadAnimatedValue.setValue(1);
+              break;
+            }
+            case 5: {
+              likeAnimatedValue.setValue(1);
+              loveAnimatedValue.setValue(1);
+              hahaAnimatedValue.setValue(1);
+              wowAnimatedValue.setValue(1);
+              sadAnimatedValue.setValue(2);
+              break;
+            }
+          }
+        }
       },
-      onPanResponderRelease: (event, gesture) => {},
+      // onPanResponderRelease: (event, gesture) => {},
     }),
   ).current;
 
-  const animatedValue = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (showEmojis) {
+      Animated.timing(animatedValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      animatedValue.setValue(0);
+    }
+  }, [showEmojis, animatedValue]);
+
+  const emojisContainerAnimation = {
+    transform: [{scale: animatedValue}],
+  };
 
   return (
     <View style={styles.container}>
@@ -64,28 +130,30 @@ const FacebookPostReaction = () => {
         </TouchableOpacity>
 
         {showEmojis && (
-          <View style={styles.emojisContainer} {...panResponder.panHandlers}>
-            <Image
+          <Animated.View
+            style={[styles.emojisContainer, emojisContainerAnimation]}
+            {...panResponder.panHandlers}>
+            <Animated.Image
               source={require('../../assets/images/facebook-emojis/like.gif')}
-              style={styles.emoji}
+              style={[styles.emoji, {transform: [{scale: likeAnimatedValue}]}]}
             />
-            <Image
+            <Animated.Image
               source={require('../../assets/images/facebook-emojis/love.gif')}
-              style={styles.emoji}
+              style={[styles.emoji, {transform: [{scale: loveAnimatedValue}]}]}
             />
-            <Image
+            <Animated.Image
               source={require('../../assets/images/facebook-emojis/haha.gif')}
-              style={styles.emoji}
+              style={[styles.emoji, {transform: [{scale: hahaAnimatedValue}]}]}
             />
-            <Image
+            <Animated.Image
               source={require('../../assets/images/facebook-emojis/wow.gif')}
-              style={styles.emoji}
+              style={[styles.emoji, {transform: [{scale: wowAnimatedValue}]}]}
             />
-            <Image
+            <Animated.Image
               source={require('../../assets/images/facebook-emojis/sad.gif')}
-              style={styles.emoji}
+              style={[styles.emoji, {transform: [{scale: sadAnimatedValue}]}]}
             />
-          </View>
+          </Animated.View>
         )}
       </View>
     </View>
