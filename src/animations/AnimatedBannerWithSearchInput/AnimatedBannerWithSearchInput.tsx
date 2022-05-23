@@ -84,9 +84,7 @@ export default ({navigation}: any) => {
       <Animated.View style={[styles.bannerContainer, bannerAnimation]}>
         <Image
           style={styles.banner}
-          source={{
-            uri: 'https://scontent.fsgn13-2.fna.fbcdn.net/v/t39.30808-6/279109791_718022246057662_5702018958389138346_n.jpg?_nc_cat=109&ccb=1-6&_nc_sid=8631f5&_nc_ohc=FOautAmSDk0AX8lakyM&tn=v15os5DX4m2dRqNz&_nc_ht=scontent.fsgn13-2.fna&oh=00_AT_sqm5GR6WNFMzwxXDSCyzaCA0mNYkYtlqRm_Y0DfUI0A&oe=6282DCFD',
-          }}
+          source={require('../../images/minh-banner.png')}
         />
       </Animated.View>
       <ScrollView
