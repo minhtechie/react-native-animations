@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AnimatedList from './AnimatedList/AnimatedList';
 import DraggableBottomSheet from './DraggableBottomSheet/DraggableBottomSheet';
 import Tinder from './Tinder/Tinder';
 import ZoomableImage from './ZoomableImage/ZoomableImage';
@@ -34,11 +33,6 @@ export default () => (
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{header: () => null}}
-      />
-      <Stack.Screen
-        name="AnimatedList"
-        component={AnimatedList}
         options={{header: () => null}}
       />
       <Stack.Screen
@@ -119,10 +113,6 @@ const HomeScreen = ({navigation}: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <MenuItem
-          onPress={() => navigate('AnimatedList')}
-          label="Animated List"
-        />
         <MenuItem
           onPress={() => navigate('AnimatedBannerWithSearchInput')}
           label="Animated Banner with Search Input"
