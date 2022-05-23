@@ -1,6 +1,10 @@
 import {Platform, StyleSheet} from 'react-native';
 
-export const EMOJIS_CONTAINER_HEIGHT = 192;
+export const EMOJI_BAR_PADDING = 4;
+export const EMOJI_BAR_BORDER_RADIUS = 16;
+export const EMOJI_SIZE = 28;
+export const EMOJI_MARGIN = 6;
+
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -14,6 +18,7 @@ export default StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     padding: 16,
+    paddingBottom: 0,
   },
   authorInfoRow: {
     flexDirection: 'row',
@@ -28,6 +33,7 @@ export default StyleSheet.create({
   authorName: {
     fontSize: 13,
     fontWeight: 'bold',
+    color: '#333',
   },
   postedTime: {
     color: 'grey',
@@ -47,7 +53,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 16,
-    paddingTop: 8,
+    paddingVertical: 8,
     borderTopWidth: 1,
     borderTopColor: '#eaeaea',
   },
@@ -57,18 +63,16 @@ export default StyleSheet.create({
     marginRight: 4,
   },
   likeText: {
-    fontSize: 11,
+    fontSize: 12,
     color: '#767676',
   },
-  emojisContainer: {
+  emojisBar: {
     position: 'absolute',
     bottom: 48,
     left: 32,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: EMOJIS_CONTAINER_HEIGHT,
-    borderRadius: 16,
-    padding: 4,
+    borderRadius: EMOJI_BAR_BORDER_RADIUS,
+    padding: EMOJI_BAR_PADDING,
     backgroundColor: 'white',
     ...Platform.select({
       android: {elevation: 3},
@@ -84,7 +88,8 @@ export default StyleSheet.create({
     }),
   },
   emoji: {
-    width: 24,
-    height: 24,
+    width: EMOJI_SIZE,
+    height: EMOJI_SIZE,
+    marginHorizontal: EMOJI_MARGIN,
   },
 });
