@@ -32,7 +32,7 @@ const AnimatedHeart = ({id, onCompleteAnimation}: AnimatedHeartProps) => {
 
   return (
     <Animated.Image
-      source={require('../../assets/images/heart.png')}
+      source={require('../../images/heart.png')}
       style={[
         styles.heartIcon,
         {

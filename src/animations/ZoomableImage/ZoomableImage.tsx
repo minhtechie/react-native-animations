@@ -168,7 +168,7 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
 export default () => (
   <View style={styles.zoomableImageContainer}>
     <ZoomableImage
-      uri={require('../../assets/images/zoomable-image/avengers.jpg')}
+      uri={require('../../images/zoomable-image/avengers.jpg')}
       width={WINDOW_WIDTH}
       height={200}
       cropWidth={WINDOW_WIDTH}

@@ -79,7 +79,7 @@ export default ({navigation}: any) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}>
         <Animated.Image
-          source={require('../../assets/images/food-app/left-arrow.png')}
+          source={require('../../images/food-app/left-arrow.png')}
           style={[styles.backIcon, backIconAnimation]}
         />
       </TouchableOpacity>
@@ -87,7 +87,7 @@ export default ({navigation}: any) => {
         style={styles.searchButton}
         onPress={() => setSearchModalVisible(true)}>
         <Animated.Image
-          source={require('../../assets/images/food-app/search.png')}
+          source={require('../../images/food-app/search.png')}
           style={[styles.searchIcon, searchIconAnimation]}
         />
       </TouchableOpacity>
@@ -98,7 +98,7 @@ export default ({navigation}: any) => {
       <Animated.View style={[styles.bannerContainer, bannerAnimation]}>
         <Image
           style={styles.banner}
-          source={require('../../assets/images/food-app/foodBanner.png')}
+          source={require('../../images/food-app/foodBanner.png')}
         />
         <LinearGradient
           style={styles.gradient}

@@ -97,7 +97,7 @@ export default function MomoHeader() {
         <View style={styles.upperHeader}>
           <View style={styles.searchContainer}>
             <Image
-              source={require('../../assets/images/momo/search.png')}
+              source={require('../../images/momo/search.png')}
               style={[styles.icon16, {marginLeft: 8}]}
             />
             <AnimatedTextInput
@@ -108,11 +108,11 @@ export default function MomoHeader() {
           </View>
 
           <Image
-            source={require('../../assets/images/momo/bell.png')}
+            source={require('../../images/momo/bell.png')}
             style={styles.bell}
           />
           <Image
-            source={require('../../assets/images/momo/avatar.png')}
+            source={require('../../images/momo/avatar.png')}
             style={styles.avatar}
           />
         </View>
@@ -120,11 +120,11 @@ export default function MomoHeader() {
         <View style={[styles.lowerHeader]}>
           <Animated.View style={[styles.feature, depositViewAnimation]}>
             <Animated.Image
-              source={require('../../assets/images/momo/deposit.png')}
+              source={require('../../images/momo/deposit.png')}
               style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
-              source={require('../../assets/images/momo/deposit-circle.png')}
+              source={require('../../images/momo/deposit-circle.png')}
               style={[styles.icon32, featureIconCircleAnimation]}
             />
             <Animated.Text style={[styles.featureName, featureNameAnimation]}>
@@ -134,11 +134,11 @@ export default function MomoHeader() {
 
           <Animated.View style={[styles.feature, withdrawViewAnimation]}>
             <Animated.Image
-              source={require('../../assets/images/momo/withdraw.png')}
+              source={require('../../images/momo/withdraw.png')}
               style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
-              source={require('../../assets/images/momo/withdraw-circle.png')}
+              source={require('../../images/momo/withdraw-circle.png')}
               style={[styles.icon32, featureIconCircleAnimation]}
             />
             <Animated.Text style={[styles.featureName, featureNameAnimation]}>
@@ -148,11 +148,11 @@ export default function MomoHeader() {
 
           <Animated.View style={[styles.feature, qrViewAnimation]}>
             <Animated.Image
-              source={require('../../assets/images/momo/qr.png')}
+              source={require('../../images/momo/qr.png')}
               style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
-              source={require('../../assets/images/momo/qr-circle.png')}
+              source={require('../../images/momo/qr-circle.png')}
               style={[styles.icon32, featureIconCircleAnimation]}
             />
             <Animated.Text style={[styles.featureName, featureNameAnimation]}>
@@ -162,11 +162,11 @@ export default function MomoHeader() {
 
           <Animated.View style={[styles.feature, scanViewAnimation]}>
             <Animated.Image
-              source={require('../../assets/images/momo/scan.png')}
+              source={require('../../images/momo/scan.png')}
               style={[styles.featureIcon, featureIconAnimation]}
             />
             <Animated.Image
-              source={require('../../assets/images/momo/scan-circle.png')}
+              source={require('../../images/momo/scan-circle.png')}
               style={[styles.icon32, featureIconCircleAnimation]}
             />
             <Animated.Text style={[styles.featureName, featureNameAnimation]}>

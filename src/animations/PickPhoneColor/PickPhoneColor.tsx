@@ -9,10 +9,10 @@ const colors = [
   {code: '#545351', name: 'Space gray'},
 ];
 const iphoneImages = [
-  require('../../assets/images/pick-phone/iphone_11_pro_max_gold.png'),
-  require('../../assets/images/pick-phone/iphone_11_pro_max_midnight_green.png'),
-  require('../../assets/images/pick-phone/iphone_11_pro_max_silver.png'),
-  require('../../assets/images/pick-phone/iphone_11_pro_max_space_gray.png'),
+  require('../../images/pick-phone/iphone_11_pro_max_gold.png'),
+  require('../../images/pick-phone/iphone_11_pro_max_midnight_green.png'),
+  require('../../images/pick-phone/iphone_11_pro_max_silver.png'),
+  require('../../images/pick-phone/iphone_11_pro_max_space_gray.png'),
 ];
 
 const PickPhoneColor = () => {

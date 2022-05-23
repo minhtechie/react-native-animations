@@ -12,7 +12,7 @@ export default (props: TextInputProps) => {
         {...props}
       />
       <Image
-        source={require('../../assets/images/food-app/search.png')}
+        source={require('../../images/food-app/search.png')}
         style={styles.searchIcon}
       />
     </View>

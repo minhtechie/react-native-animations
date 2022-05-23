@@ -67,7 +67,7 @@ const FacebookPostReaction = () => {
       <View style={styles.post}>
         <View style={styles.authorInfoRow}>
           <Image
-            source={require('../../../src/assets/images/minh-logo.png')}
+            source={require('../../../src/images/minh-logo.png')}
             style={styles.authorAvatar}
           />
           <View>
@@ -81,7 +81,7 @@ const FacebookPostReaction = () => {
             Like and subscribe to Minh Techie channel
           </Text>
           <Image
-            source={require('../../../src/assets/images/minh-banner.png')}
+            source={require('../../../src/images/minh-banner.png')}
             style={styles.postImage}
           />
         </View>
@@ -95,7 +95,7 @@ const FacebookPostReaction = () => {
             source={
               selectedEmojiIndex !== null
                 ? emojisData[selectedEmojiIndex]
-                : require('../../assets/images/facebook-emojis/like.png')
+                : require('../../images/facebook-emojis/like.png')
             }
             style={styles.likeIcon}
           />

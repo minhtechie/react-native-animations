@@ -71,13 +71,13 @@ export default ({navigation}: any) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}>
         <Animated.Image
-          source={require('../../assets/images/food-app/left-arrow.png')}
+          source={require('../../images/food-app/left-arrow.png')}
           style={[styles.backIcon, backIconAnimation]}
         />
       </TouchableOpacity>
       <TouchableOpacity style={styles.searchButton}>
         <Animated.Image
-          source={require('../../assets/images/food-app/search.png')}
+          source={require('../../images/food-app/search.png')}
           style={[styles.searchIcon, searchIconAnimation]}
         />
       </TouchableOpacity>

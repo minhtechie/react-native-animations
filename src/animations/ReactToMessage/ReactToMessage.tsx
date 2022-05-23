@@ -34,7 +34,7 @@ const ReactToMessage = () => {
       <View style={styles.messageContainer}>
         <Image
           style={styles.messageAvatar}
-          source={require('../../assets/images/users/girl1.jpeg')}
+          source={require('../../images/users/girl1.jpeg')}
         />
         <View style={styles.messageContent}>
           <Text style={styles.messageText}>
@@ -71,12 +71,12 @@ const ReactToMessage = () => {
             {heartCount ? (
               <Image
                 style={styles.loveIcon}
-                source={require('../../assets/images/heart.png')}
+                source={require('../../images/heart.png')}
               />
             ) : (
               <Image
                 style={styles.loveIcon}
-                source={require('../../assets/images/heart-outline.png')}
+                source={require('../../images/heart-outline.png')}
               />
             )}
           </View>

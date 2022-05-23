@@ -69,7 +69,7 @@ const DoubleTapToHeart = () => {
         }}>
         <Image
           style={styles.messageAvatar}
-          source={require('../../../src/assets/images/users/girl1.jpeg')}
+          source={require('../../../src/images/users/girl1.jpeg')}
         />
         <View style={styles.messageContent}>
           <Text style={styles.messageText}>
@@ -82,7 +82,7 @@ const DoubleTapToHeart = () => {
             <Animated.View style={[styles.heartCircle, heartCircleAnimation]} />
             <Animated.Image
               style={[styles.heartIcon, heartAnimation]}
-              source={require('../../../src/assets/images/heart.png')}
+              source={require('../../../src/images/heart.png')}
             />
           </View>
         )}
