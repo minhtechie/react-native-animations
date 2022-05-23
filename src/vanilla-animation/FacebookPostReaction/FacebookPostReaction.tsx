@@ -1,95 +1,67 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
+import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import {
-  Animated,
-  Image,
-  PanResponder,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+  GestureHandlerRootView,
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
+import Animated, {
+  runOnJS,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import Emoji from './Emoji';
 import emojisData from './emojisData';
 import styles, {
   EMOJI_SIZE,
   EMOJI_MARGIN,
   EMOJI_BAR_PADDING,
-  EMOJI_BAR_BORDER_RADIUS,
 } from './facebookStyles';
 
 const EMOJI_SPACE = EMOJI_SIZE + EMOJI_MARGIN * 2 + EMOJI_BAR_PADDING;
 
+const getEmojiIndex = (positionX: number) => {
+  'worklet';
+  return Math.ceil(positionX / EMOJI_SPACE) - 1;
+};
+
 const FacebookPostReaction = () => {
-  const [showEmojis, setShowEmojis] = useState(false);
   const [selectedEmojiIndex, setSelectedEmojiIndex] = useState<null | number>(
     null,
   );
+  const emojisBarSharedValue = useSharedValue(0);
+  const emojisBarAnimationStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{scale: emojisBarSharedValue.value}],
+    };
+  }, []);
 
-  const emojisBarAnimatedValue = useRef(new Animated.Value(0)).current;
-  const emojiAnimatedValue = useRef([
-    new Animated.Value(1),
-    new Animated.Value(1),
-    new Animated.Value(1),
-    new Animated.Value(1),
-    new Animated.Value(1),
-  ]);
+  const activeEmojiIndexSharedValue = useSharedValue(-1);
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: (event, gesture) => {
-        const moveX = gesture.moveX;
-        if (
-          moveX >= EMOJI_BAR_BORDER_RADIUS &&
-          moveX <= EMOJI_SPACE * emojisData.length
-        ) {
-          const index = Math.round(moveX / EMOJI_SPACE) - 1;
-          Animated.timing(emojiAnimatedValue.current[index], {
-            toValue: 1.75,
-            duration: 75,
-            useNativeDriver: false,
-          }).start();
-          emojiAnimatedValue.current.forEach((value, i) => {
-            if (index !== i) {
-              value.setValue(1);
-            }
-          });
-        }
-      },
-      onPanResponderRelease: (event, gesture) => {
-        const moveX = gesture.moveX;
-        const index = Math.round(moveX / EMOJI_SPACE) - 1;
-        setSelectedEmojiIndex(index);
-        setShowEmojis(false);
-      },
-    }),
-  ).current;
-
-  useEffect(() => {
-    if (showEmojis) {
-      Animated.timing(emojisBarAnimatedValue, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      emojisBarAnimatedValue.setValue(0);
-      emojiAnimatedValue.current.forEach(value => {
-        value.setValue(1);
-      });
-    }
-  }, [showEmojis, emojisBarAnimatedValue, emojiAnimatedValue]);
-
-  const emojisBarAnimation = {
-    transform: [{scale: emojisBarAnimatedValue}],
+  const selectEmoji = (x: number) => {
+    const index = Math.ceil(x / EMOJI_SPACE) - 1;
+    setSelectedEmojiIndex(index);
   };
 
+  const animatedGestureHandler =
+    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+      onStart: ({x}) => {
+        activeEmojiIndexSharedValue.value = getEmojiIndex(x);
+      },
+      onActive: ({x}) => {
+        activeEmojiIndexSharedValue.value = getEmojiIndex(x);
+      },
+      onEnd: ({x}) => {
+        runOnJS(selectEmoji)(x);
+        activeEmojiIndexSharedValue.value = -1;
+        emojisBarSharedValue.value = withTiming(0);
+      },
+    });
+
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={styles.container}
-      onPress={() => {
-        setShowEmojis(false);
-      }}>
+    <View style={styles.container}>
       <SafeAreaView style={styles.safeAreaView} />
 
       <View style={styles.post}>
@@ -117,7 +89,7 @@ const FacebookPostReaction = () => {
         <TouchableOpacity
           style={styles.actionContainer}
           onLongPress={() => {
-            setShowEmojis(!showEmojis);
+            emojisBarSharedValue.value = withTiming(1, {duration: 100});
           }}>
           <Image
             source={
@@ -130,33 +102,25 @@ const FacebookPostReaction = () => {
           <Text style={styles.likeText}>Like</Text>
         </TouchableOpacity>
 
-        {showEmojis && (
-          <Animated.View
-            style={[styles.emojisBar, emojisBarAnimation]}
-            {...panResponder.panHandlers}>
-            {/* render emojis */}
-            {emojisData.map((emojiSource, index) => {
-              return (
-                <Animated.Image
-                  key={index}
-                  source={emojiSource}
-                  style={[
-                    styles.emoji,
-                    {
-                      transform: [
-                        {
-                          scale: emojiAnimatedValue.current[index],
-                        },
-                      ],
-                    },
-                  ]}
-                />
-              );
-            })}
-          </Animated.View>
-        )}
+        <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+          <PanGestureHandler onGestureEvent={animatedGestureHandler}>
+            <Animated.View style={[styles.emojisBar, emojisBarAnimationStyle]}>
+              {/* render emojis */}
+              {emojisData.map((emojiSource, index) => {
+                return (
+                  <Emoji
+                    source={emojiSource}
+                    key={index}
+                    index={index}
+                    activeIndex={activeEmojiIndexSharedValue}
+                  />
+                );
+              })}
+            </Animated.View>
+          </PanGestureHandler>
+        </GestureHandlerRootView>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

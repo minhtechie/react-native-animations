@@ -3,7 +3,7 @@ import {Platform, StyleSheet} from 'react-native';
 export const EMOJI_BAR_PADDING = 4;
 export const EMOJI_BAR_BORDER_RADIUS = 16;
 export const EMOJI_SIZE = 28;
-export const EMOJI_MARGIN = 6;
+export const EMOJI_MARGIN = 2;
 
 export default StyleSheet.create({
   container: {
@@ -66,10 +66,12 @@ export default StyleSheet.create({
     fontSize: 12,
     color: '#767676',
   },
-  emojisBar: {
+  gestureHandlerRootView: {
     position: 'absolute',
     bottom: 48,
     left: 32,
+  },
+  emojisBar: {
     flexDirection: 'row',
     borderRadius: EMOJI_BAR_BORDER_RADIUS,
     padding: EMOJI_BAR_PADDING,
