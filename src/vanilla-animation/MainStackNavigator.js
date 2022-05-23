@@ -18,6 +18,7 @@ import PickPhoneColor from './PickPhoneColor/PickPhoneColor';
 import ReactToMessage from './ReactToMessage/ReactToMessage';
 import DoubleTapToHeart from './DoubleTapToHeart/DoubleTapToHeart';
 import MoMoHeader from './MomoHeader/MomoHeader';
+import ZingCarousel from './ZingCarousel/ZingCarousel';
 import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
 import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
 import FacebookPostReaction from './FacebookPostReaction/FacebookPostReaction';
@@ -96,6 +97,11 @@ export default () => (
         component={FacebookPostReaction}
         options={{header: () => null}}
       />
+      <Stack.Screen
+        name="ZingCarousel"
+        component={ZingCarousel}
+        options={{header: () => null}}
+      />
     </Stack.Navigator>
   </NavigationContainer>
 );
@@ -156,8 +162,12 @@ const HomeScreen = ({navigation}: any) => {
         />
         <MenuItem onPress={() => navigate('MoMoHeader')} label="MoMo Header" />
         <MenuItem
+          onPress={() => navigate('ZingCarousel')}
+          label="ZingCarousel"
+        />
+        <MenuItem
           onPress={() => navigate('FacebookPostReaction')}
-          label="FacebookPostReaction"
+          label="Facebook Post Reaction"
         />
       </ScrollView>
     </SafeAreaView>
@@ -170,7 +180,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   scrollView: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
