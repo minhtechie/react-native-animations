@@ -1,5 +1,11 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, TouchableOpacity, Text} from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AnimatedList from './AnimatedList/AnimatedList';
@@ -15,6 +21,7 @@ import MoMoHeader from './MomoHeader/MomoHeader';
 import ZingCarousel from './ZingCarousel/ZingCarousel';
 import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
 import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
+import FacebookPostReaction from './FacebookPostReaction/FacebookPostReaction';
 
 const Stack = createNativeStackNavigator();
 
@@ -86,6 +93,11 @@ export default () => (
         options={{header: () => null}}
       />
       <Stack.Screen
+        name="FacebookPostReaction"
+        component={FacebookPostReaction}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
         name="ZingCarousel"
         component={ZingCarousel}
         options={{header: () => null}}
@@ -106,49 +118,58 @@ const HomeScreen = ({navigation}: any) => {
   const {navigate} = navigation;
   return (
     <SafeAreaView style={styles.container}>
-      <MenuItem
-        onPress={() => navigate('AnimatedList')}
-        label="Animated List"
-      />
-      <MenuItem
-        onPress={() => navigate('AnimatedBannerWithSearchInput')}
-        label="Animated Banner with Search Input"
-      />
-      <MenuItem
-        onPress={() => navigate('DraggableBottomSheet')}
-        label="Draggable Bottom Sheet"
-      />
-      <MenuItem onPress={() => navigate('Tinder')} label="Tinder" />
-      <MenuItem
-        onPress={() => navigate('ZoomableImage')}
-        label="Zoomable Image"
-      />
-      <MenuItem
-        onPress={() => navigate('SwipeableList')}
-        label="Swipeable List"
-      />
-      <MenuItem
-        onPress={() => navigate('PickPhoneColor')}
-        label="Pick phone color"
-      />
-      <MenuItem
-        onPress={() => navigate('CubeCarousel')}
-        label="Cube Carousel"
-      />
-      <MenuItem
-        onPress={() => navigate('TikTokMusicDisc')}
-        label="TikTok Music Disc"
-      />
-      <MenuItem
-        onPress={() => navigate('ReactToMessage')}
-        label="React To Message"
-      />
-      <MenuItem
-        onPress={() => navigate('DoubleTapToHeart')}
-        label="Double Tap To Heart"
-      />
-      <MenuItem onPress={() => navigate('MoMoHeader')} label="MoMo Header" />
-      <MenuItem onPress={() => navigate('ZingCarousel')} label="ZingCarousel" />
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <MenuItem
+          onPress={() => navigate('AnimatedList')}
+          label="Animated List"
+        />
+        <MenuItem
+          onPress={() => navigate('AnimatedBannerWithSearchInput')}
+          label="Animated Banner with Search Input"
+        />
+        <MenuItem
+          onPress={() => navigate('DraggableBottomSheet')}
+          label="Draggable Bottom Sheet"
+        />
+        <MenuItem onPress={() => navigate('Tinder')} label="Tinder" />
+        <MenuItem
+          onPress={() => navigate('ZoomableImage')}
+          label="Zoomable Image"
+        />
+        <MenuItem
+          onPress={() => navigate('SwipeableList')}
+          label="Swipeable List"
+        />
+        <MenuItem
+          onPress={() => navigate('PickPhoneColor')}
+          label="Pick phone color"
+        />
+        <MenuItem
+          onPress={() => navigate('CubeCarousel')}
+          label="Cube Carousel"
+        />
+        <MenuItem
+          onPress={() => navigate('TikTokMusicDisc')}
+          label="TikTok Music Disc"
+        />
+        <MenuItem
+          onPress={() => navigate('ReactToMessage')}
+          label="React To Message"
+        />
+        <MenuItem
+          onPress={() => navigate('DoubleTapToHeart')}
+          label="Double Tap To Heart"
+        />
+        <MenuItem onPress={() => navigate('MoMoHeader')} label="MoMo Header" />
+        <MenuItem
+          onPress={() => navigate('ZingCarousel')}
+          label="ZingCarousel"
+        />
+        <MenuItem
+          onPress={() => navigate('FacebookPostReaction')}
+          label="Facebook Post Reaction"
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -156,9 +177,11 @@ const HomeScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
+  },
+  scrollView: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
   },
   item: {
     width: '50%',
