@@ -64,10 +64,10 @@ const CircledNumber = ({
 const data = Array.from(Array(50).keys());
 
 const randomTrueOrFalse = () => {
-  return Math.random() < 0.5 ? false : true;
+  return Math.random() < 0.2 ? false : true;
 };
 
-export default function LoginScreen() {
+export default function RandomNumber() {
   const [flashingItems, setFlashingItems] = useState<Array<boolean>>([]);
 
   const randomNumber = () => {
