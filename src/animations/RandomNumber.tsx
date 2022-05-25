@@ -8,6 +8,10 @@ import {
   StyleSheet,
 } from 'react-native';
 
+const getRandomTime = () => {
+  return Math.random() * 50;
+};
+
 const CircledNumber = ({
   isFlashing,
   value,
@@ -19,13 +23,15 @@ const CircledNumber = ({
 
   useEffect(() => {
     if (isFlashing) {
-      Animated.timing(animatedValue, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => {
-        animatedValue.setValue(0);
-      });
+      setTimeout(() => {
+        Animated.timing(animatedValue, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: false,
+        }).start(() => {
+          animatedValue.setValue(0);
+        });
+      }, value * getRandomTime());
     }
   }, [isFlashing]);
 
@@ -55,30 +61,32 @@ const CircledNumber = ({
   );
 };
 
-const arr = Array.from(Array(50).keys());
+const data = Array.from(Array(50).keys());
 
-const randomRoundNumber = () => {
-  return Math.floor(Math.random() * 50);
+const randomTrueOrFalse = () => {
+  return Math.random() < 0.5 ? false : true;
 };
 
 export default function LoginScreen() {
-  const [randomedNumber, setRandomedNumber] = useState(-1);
+  const [flashingItems, setFlashingItems] = useState<Array<boolean>>([]);
 
   const randomNumber = () => {
-    for (let i = 1; i <= 20; i++) {
-      setTimeout(() => {
-        setRandomedNumber(randomRoundNumber());
-      }, 50 * i);
-    }
+    const _flashingItems: Array<boolean> = [];
+
+    data.forEach((value, index) => {
+      _flashingItems[index] = randomTrueOrFalse();
+    });
+
+    setFlashingItems(_flashingItems);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.numbersContainer}>
-        {arr.map((value, index) => (
+        {data.map((value, index) => (
           <CircledNumber
             key={index}
-            isFlashing={index === randomedNumber}
+            isFlashing={flashingItems[index]}
             value={index}
           />
         ))}
