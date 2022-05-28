@@ -1,4 +1,4 @@
-export const musicData = [
+export const genresData = [
   {
     id: '0',
     image: require('../images/zing/1.png'),
@@ -28,5 +28,10 @@ export const musicData = [
     id: '5',
     image: require('../images/zing/6.png'),
     bannerImage: require('../images/zing/6banner.jpeg'),
+  },
+  {
+    id: '6',
+    image: require('../images/zing/7.png'),
+    bannerImage: require('../images/zing/7banner.jpeg'),
   },
 ];
