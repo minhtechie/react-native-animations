@@ -67,15 +67,18 @@ export default StyleSheet.create({
     color: '#767676',
   },
   gestureHandlerRootView: {
-    position: 'absolute',
-    bottom: 48,
-    left: 32,
+    height: 50,
   },
   emojisBar: {
     flexDirection: 'row',
     borderRadius: EMOJI_BAR_BORDER_RADIUS,
     padding: EMOJI_BAR_PADDING,
     backgroundColor: 'white',
+    width: 175,
+    position: 'absolute',
+    top: -20,
+    height: EMOJI_SIZE + 6,
+    justifyContent: 'space-around',
     ...Platform.select({
       android: {elevation: 3},
       ios: {

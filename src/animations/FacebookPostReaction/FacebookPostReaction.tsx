@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {Image, SafeAreaView, Text, View} from 'react-native';
 import {
   GestureHandlerRootView,
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  GestureDetector,
+  Gesture,
 } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -37,7 +38,6 @@ const FacebookPostReaction = () => {
       transform: [{scale: emojisBarSharedValue.value}],
     };
   }, []);
-
   const activeEmojiIndexSharedValue = useSharedValue(-1);
 
   const selectEmoji = (x: number) => {
@@ -45,82 +45,112 @@ const FacebookPostReaction = () => {
     setSelectedEmojiIndex(index);
   };
 
-  const animatedGestureHandler =
-    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-      onStart: ({x}) => {
-        activeEmojiIndexSharedValue.value = getEmojiIndex(x);
-      },
-      onActive: ({x}) => {
-        activeEmojiIndexSharedValue.value = getEmojiIndex(x);
-      },
-      onEnd: ({x}) => {
-        runOnJS(selectEmoji)(x);
-        activeEmojiIndexSharedValue.value = -1;
-        emojisBarSharedValue.value = withTiming(0);
-      },
+  const isLongPressed = useSharedValue(false);
+
+  const longPress = Gesture.LongPress()
+    .minDuration(500)
+    .onStart(() => {
+      emojisBarSharedValue.value = withTiming(1, {duration: 150});
+      isLongPressed.value = true;
     });
 
+  const panGesture = Gesture.Pan()
+    .manualActivation(true)
+    .onTouchesMove((event, stateManager) => {
+      if (isLongPressed.value) {
+        stateManager.activate();
+      } else {
+        stateManager.fail();
+      }
+    })
+    .onUpdate(event => {
+      if (event.y > -50 && event.y < 10) {
+        activeEmojiIndexSharedValue.value = getEmojiIndex(event.x);
+      } else {
+        runOnJS(setSelectedEmojiIndex)(null);
+        activeEmojiIndexSharedValue.value = -1;
+      }
+    })
+    .onEnd(event => {
+      if (event.y > -50 && event.y < 10) {
+        runOnJS(selectEmoji)(event.x);
+        activeEmojiIndexSharedValue.value = -1;
+        emojisBarSharedValue.value = withTiming(0);
+      } else {
+        runOnJS(setSelectedEmojiIndex)(null);
+        activeEmojiIndexSharedValue.value = -1;
+        emojisBarSharedValue.value = withTiming(0);
+      }
+    })
+    .onTouchesUp(() => {
+      isLongPressed.value = false;
+    });
+
+  const composed = Gesture.Simultaneous(longPress, panGesture);
+
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.safeAreaView} />
 
       <View style={styles.post}>
-        <View style={styles.authorInfoRow}>
+        <TouchableWithoutFeedback
+          style={styles.authorInfoRow}
+          onPress={() => {
+            emojisBarSharedValue.value = withTiming(0, {duration: 150});
+          }}>
           <Image
             source={require('../../../src/images/minh-logo.png')}
             style={styles.authorAvatar}
           />
           <View>
-            <Text style={styles.authorName}>Minh Techie</Text>
+            <Text style={styles.authorName}>Quy</Text>
             <Text style={styles.postedTime}>Today</Text>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
 
         <View>
-          <Text style={styles.postContentText}>
-            Like and subscribe to Minh Techie channel
-          </Text>
-          <Image
-            source={require('../../../src/images/minh-banner.png')}
-            style={styles.postImage}
-          />
+          <Text style={styles.postContentText}>Alo 1234</Text>
         </View>
-
-        <TouchableOpacity
-          style={styles.actionContainer}
-          onLongPress={() => {
-            emojisBarSharedValue.value = withTiming(1, {duration: 100});
-          }}>
-          <Image
-            source={
-              selectedEmojiIndex !== null
-                ? emojisData[selectedEmojiIndex]
-                : require('../../images/facebook-emojis/like.png')
-            }
-            style={styles.likeIcon}
-          />
-          <Text style={styles.likeText}>Like</Text>
-        </TouchableOpacity>
-
-        <GestureHandlerRootView style={styles.gestureHandlerRootView}>
-          <PanGestureHandler onGestureEvent={animatedGestureHandler}>
-            <Animated.View style={[styles.emojisBar, emojisBarAnimationStyle]}>
-              {/* render emojis */}
-              {emojisData.map((emojiSource, index) => {
-                return (
-                  <Emoji
-                    source={emojiSource}
-                    key={index}
-                    index={index}
-                    activeIndex={activeEmojiIndexSharedValue}
-                  />
-                );
-              })}
-            </Animated.View>
-          </PanGestureHandler>
-        </GestureHandlerRootView>
+        <View style={styles.gestureHandlerRootView}>
+          <GestureDetector gesture={composed}>
+            <>
+              <View style={styles.actionContainer}>
+                <Image
+                  source={
+                    selectedEmojiIndex !== null
+                      ? emojisData[selectedEmojiIndex]
+                      : require('../../images/facebook-emojis/like.png')
+                  }
+                  style={styles.likeIcon}
+                />
+                <Text style={styles.likeText}>Like</Text>
+              </View>
+              <Animated.View
+                style={[styles.emojisBar, emojisBarAnimationStyle]}>
+                {emojisData.map((emojiSource, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        setSelectedEmojiIndex(index);
+                        emojisBarSharedValue.value = withTiming(0, {
+                          duration: 150,
+                        });
+                      }}>
+                      <Emoji
+                        source={emojiSource}
+                        index={index}
+                        activeIndex={activeEmojiIndexSharedValue}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+              </Animated.View>
+            </>
+          </GestureDetector>
+        </View>
       </View>
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
