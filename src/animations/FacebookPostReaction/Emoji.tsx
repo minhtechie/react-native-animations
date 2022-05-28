@@ -20,13 +20,13 @@ const Emoji = ({
   activeIndex: Animated.SharedValue<number>;
 }) => {
   const animationStyle = useAnimatedStyle(() => {
-    const animation = interpolate(
+    const scaleAnimation = interpolate(
       activeIndex.value,
       [index - 1, index, index + 1],
       [0.8, 1.5, 0.8],
       Extrapolate.CLAMP,
     );
-    const animationMove = interpolate(
+    const topAnimation = interpolate(
       activeIndex.value,
       [index - 1, index, index + 1],
       [1, -10, 1],
@@ -35,10 +35,10 @@ const Emoji = ({
     return {
       transform: [
         {
-          scale: withSpring(animation),
+          scale: withSpring(scaleAnimation),
         },
       ],
-      top: withTiming(animationMove),
+      top: withTiming(topAnimation),
     };
   });
 

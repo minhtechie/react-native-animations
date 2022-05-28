@@ -64,7 +64,6 @@ const FacebookPostReaction = () => {
       }
     })
     .onUpdate(event => {
-      console.log('event', event.y);
       if (event.y > -50 && event.y < 10) {
         activeEmojiIndexSharedValue.value = getEmojiIndex(event.x);
       } else {
