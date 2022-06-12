@@ -31,7 +31,8 @@ export default () => (
       screenOptions={{
         headerBackTitle: '',
       }}
-      initialRouteName="Tarot">
+      // initialRouteName="Tarot"
+     >
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -165,6 +166,10 @@ const HomeScreen = ({navigation}: any) => {
         <MenuItem
           onPress={() => navigate('FacebookPostReaction')}
           label="Facebook Post Reaction"
+        />
+         <MenuItem
+          onPress={() => navigate('Tarot')}
+          label="Tarot"
         />
       </ScrollView>
     </SafeAreaView>
