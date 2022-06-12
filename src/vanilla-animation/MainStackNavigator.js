@@ -15,6 +15,7 @@ import MoMoHeader from './MomoHeader/MomoHeader';
 import ZingCarousel from './ZingCarousel/ZingCarousel';
 import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
 import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
+import Tarot from './Tarot/Tarot';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +24,8 @@ export default () => (
     <Stack.Navigator
       screenOptions={{
         headerBackTitle: '',
-      }}>
+      }}
+      initialRouteName="Tarot">
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -88,6 +90,11 @@ export default () => (
       <Stack.Screen
         name="ZingCarousel"
         component={ZingCarousel}
+        options={{header: () => null}}
+      />
+      <Stack.Screen
+        name="Tarot"
+        component={Tarot}
         options={{header: () => null}}
       />
     </Stack.Navigator>
