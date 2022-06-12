@@ -6,22 +6,22 @@ export interface UserModel {
 export default [
   {
     id: 0,
-    avatar: require('../assets/images/users/girl1.jpeg'),
+    avatar: require('../images/users/girl1.jpeg'),
   },
   {
     id: 1,
-    avatar: require('../assets/images/users/girl2.jpeg'),
+    avatar: require('../images/users/girl2.jpeg'),
   },
   {
     id: 2,
-    avatar: require('../assets/images/users/girl3.jpeg'),
+    avatar: require('../images/users/girl3.jpeg'),
   },
   {
     id: 3,
-    avatar: require('../assets/images/users/girl4.jpeg'),
+    avatar: require('../images/users/girl4.jpeg'),
   },
   {
     id: 4,
-    avatar: require('../assets/images/users/girl5.jpeg'),
+    avatar: require('../images/users/girl5.jpeg'),
   },
 ];

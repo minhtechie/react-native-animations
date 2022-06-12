@@ -1,5 +1,5 @@
 import React from 'react';
-import MainStackNavigator from './src/vanilla-animation/MainStackNavigator';
+import MainStackNavigator from './src/animations/MainStackNavigator';
 
 const App = () => {
   return <MainStackNavigator />;
