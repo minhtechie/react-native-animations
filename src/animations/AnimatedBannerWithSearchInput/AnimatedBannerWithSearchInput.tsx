@@ -10,8 +10,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {WINDOW_HEIGHT} from '../../utils';
 import SearchInput from './SearchInput';
+
+const squares = [...Array(50).keys()];
 
 export default ({navigation}: any) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
@@ -65,7 +66,7 @@ export default ({navigation}: any) => {
       <Animated.View
         style={[styles.searchInputContainer, searchInputContainerAnimation]}>
         <SafeAreaView />
-        <SearchInput editable={false} pointerEvents="none" />
+        <SearchInput autoFocus={false} />
       </Animated.View>
       <TouchableOpacity
         style={styles.backButton}
@@ -88,6 +89,7 @@ export default ({navigation}: any) => {
         />
       </Animated.View>
       <ScrollView
+        keyboardShouldPersistTaps="never"
         onScroll={Animated.event(
           [
             {
@@ -100,7 +102,11 @@ export default ({navigation}: any) => {
         )}
         scrollEventThrottle={16}>
         <View style={styles.paddingForBanner} />
-        <View style={styles.scrollViewContent} />
+        <View style={styles.scrollViewContent}>
+          {squares.map(item => (
+            <View key={item} style={styles.square} />
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
@@ -172,7 +178,15 @@ const styles = StyleSheet.create({
     height: BANNER_HEIGHT,
   },
   scrollViewContent: {
-    height: WINDOW_HEIGHT,
     backgroundColor: 'white',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  square: {
+    width: 100,
+    height: 100,
+    margin: 8,
+    backgroundColor: '#eaeaea',
   },
 });
