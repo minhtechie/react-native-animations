@@ -1,46 +1,41 @@
 export const tarotData = [
-    {
-      id: '0',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '1',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '2',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '3',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '4',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '5',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '6',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '7',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '8',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '9',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-    {
-      id: '10',
-      image: require('../../assets/images/tarot/tarotCard.png'),
-    },
-  ];
+  {
+    id: '0',
+  },
+  {
+    id: '1',
+  },
+  {
+    id: '2',
+  },
+  {
+    id: '3',
+  },
+  {
+    id: '4',
+  },
+  {
+    id: '5',
+  },
+  {
+    id: '6',
+  },
+  {
+    id: '7',
+  },
+  {
+    id: '8',
+  },
+  {
+    id: '9',
+  },
+  {
+    id: '10',
+  },
+  {
+    id: '11',
+  },
+  {
+    id: '12',
+  },
+];
