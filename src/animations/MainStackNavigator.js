@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, SafeAreaView, TouchableOpacity, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DraggableBottomSheet from './DraggableBottomSheet/DraggableBottomSheet';
@@ -30,9 +24,7 @@ export default () => (
     <Stack.Navigator
       screenOptions={{
         headerBackTitle: '',
-      }}
-      // initialRouteName="Tarot"
-     >
+      }}>
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -120,58 +112,50 @@ const HomeScreen = ({navigation}: any) => {
   const {navigate} = navigation;
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <MenuItem
-          onPress={() => navigate('AnimatedBannerWithSearchInput')}
-          label="Animated Banner with Search Input"
-        />
-        <MenuItem
-          onPress={() => navigate('DraggableBottomSheet')}
-          label="Draggable Bottom Sheet"
-        />
-        <MenuItem onPress={() => navigate('Tinder')} label="Tinder" />
-        <MenuItem
-          onPress={() => navigate('ZoomableImage')}
-          label="Zoomable Image"
-        />
-        <MenuItem
-          onPress={() => navigate('SwipeableList')}
-          label="Swipeable List"
-        />
-        <MenuItem
-          onPress={() => navigate('PickPhoneColor')}
-          label="Pick phone color"
-        />
-        <MenuItem
-          onPress={() => navigate('CubeCarousel')}
-          label="Cube Carousel"
-        />
-        <MenuItem
-          onPress={() => navigate('TikTokMusicDisc')}
-          label="TikTok Music Disc"
-        />
-        <MenuItem
-          onPress={() => navigate('ReactToMessage')}
-          label="React To Message"
-        />
-        <MenuItem
-          onPress={() => navigate('DoubleTapToHeart')}
-          label="Double Tap To Heart"
-        />
-        <MenuItem onPress={() => navigate('MoMoHeader')} label="MoMo Header" />
-        <MenuItem
-          onPress={() => navigate('ZingCarousel')}
-          label="ZingCarousel"
-        />
-        <MenuItem
-          onPress={() => navigate('FacebookPostReaction')}
-          label="Facebook Post Reaction"
-        />
-         <MenuItem
-          onPress={() => navigate('Tarot')}
-          label="Tarot"
-        />
-      </ScrollView>
+      <MenuItem
+        onPress={() => navigate('AnimatedBannerWithSearchInput')}
+        label="Animated Banner with Search Input"
+      />
+      <MenuItem
+        onPress={() => navigate('DraggableBottomSheet')}
+        label="Draggable Bottom Sheet"
+      />
+      <MenuItem onPress={() => navigate('Tinder')} label="Tinder" />
+      <MenuItem
+        onPress={() => navigate('ZoomableImage')}
+        label="Zoomable Image"
+      />
+      <MenuItem
+        onPress={() => navigate('SwipeableList')}
+        label="Swipeable List"
+      />
+      <MenuItem
+        onPress={() => navigate('PickPhoneColor')}
+        label="Pick phone color"
+      />
+      <MenuItem
+        onPress={() => navigate('CubeCarousel')}
+        label="Cube Carousel"
+      />
+      <MenuItem
+        onPress={() => navigate('TikTokMusicDisc')}
+        label="TikTok Music Disc"
+      />
+      <MenuItem
+        onPress={() => navigate('ReactToMessage')}
+        label="React To Message"
+      />
+      <MenuItem
+        onPress={() => navigate('DoubleTapToHeart')}
+        label="Double Tap To Heart"
+      />
+      <MenuItem onPress={() => navigate('MoMoHeader')} label="MoMo Header" />
+      <MenuItem onPress={() => navigate('ZingCarousel')} label="ZingCarousel" />
+      <MenuItem
+        onPress={() => navigate('FacebookPostReaction')}
+        label="Facebook Post Reaction"
+      />
+      <MenuItem onPress={() => navigate('Tarot')} label="Tarot" />
     </SafeAreaView>
   );
 };
@@ -179,14 +163,14 @@ const HomeScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    alignItems: 'center',
     backgroundColor: 'white',
   },
-  scrollView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   item: {
-    width: '50%',
+    width: '45%',
     alignItems: 'center',
     padding: 8,
     margin: 8,
