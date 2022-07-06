@@ -16,6 +16,7 @@ import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/Anima
 import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
 import Tarot from './Tarot/Tarot';
 import FacebookPostReaction from './FacebookPostReaction/FacebookPostReaction';
+import Carousel from './ZingCarousel/Carousel';
 
 const Stack = createNativeStackNavigator();
 
@@ -88,7 +89,7 @@ export default () => (
       />
       <Stack.Screen
         name="ZingCarousel"
-        component={ZingCarousel}
+        component={Carousel}
         options={{header: () => null}}
       />
       <Stack.Screen
