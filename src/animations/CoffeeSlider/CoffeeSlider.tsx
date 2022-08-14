@@ -49,17 +49,17 @@ const COFFEE_DATA = [
 const SLIDER_HEIGHT = WINDOW_HEIGHT - 120;
 const IMG_HEIGHT = SLIDER_HEIGHT * 0.7;
 
-const getOpacity = (index: number) => {
-  switch (index) {
-    case 0:
-    case 1:
-      return 1;
-    case 2:
-      return 0.5;
-    default:
-      return 0;
-  }
-};
+// const getOpacity = (index: number) => {
+//   switch (index) {
+//     case 0:
+//     case 1:
+//       return 1;
+//     case 2:
+//       return 0.5;
+//     default:
+//       return 0;
+//   }
+// };
 
 const CoffeeItem = ({
   image,
@@ -81,16 +81,16 @@ export default function CoffeeSlider() {
   let prevTranslateY = 0;
   let imageTranslateY = 0;
 
-  const animatedValue = useRef(new Animated.Value(0)).current;
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: (e, gesture) => {
-        animatedValue.setValue();
-      },
-      onPanResponderRelease: (e, gesture) => {},
-    }),
-  ).current;
+  // const animatedValue = useRef(new Animated.Value(0)).current;
+  // const panResponder = useRef(
+  //   PanResponder.create({
+  //     onStartShouldSetPanResponder: () => true,
+  //     onPanResponderMove: (e, gesture) => {
+  //       animatedValue.setValue();
+  //     },
+  //     onPanResponderRelease: (e, gesture) => {},
+  //   }),
+  // ).current;
 
   return (
     <View style={styles.container}>
