@@ -9,34 +9,36 @@ const DraggableBottomView = () => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const scrollOffset = useRef(0);
 
-  const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderGrant: () => {
-      animatedValue.setOffset(scrollOffset.current);
-      animatedValue.setValue(0);
-    },
-    onPanResponderMove: (evt, gesture) => {
-      animatedValue.setValue(gesture.dy);
-    },
-    onPanResponderRelease: (evt, gesture) => {
-      animatedValue.flattenOffset();
-      if (gesture.dy > 0) {
-        // is dragging down
-        if (scrollOffset.current !== 0 && gesture.dy <= 100) {
-          springAnimation('up');
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        animatedValue.setOffset(scrollOffset.current);
+        animatedValue.setValue(0);
+      },
+      onPanResponderMove: (evt, gesture) => {
+        animatedValue.setValue(gesture.dy);
+      },
+      onPanResponderRelease: (evt, gesture) => {
+        animatedValue.flattenOffset();
+        if (gesture.dy > 0) {
+          // is dragging down
+          if (scrollOffset.current !== 0 && gesture.dy <= 100) {
+            springAnimation('up');
+          } else {
+            springAnimation('down');
+          }
         } else {
-          springAnimation('down');
+          // is dragging up
+          if (scrollOffset.current !== -300 && gesture.dy >= -100) {
+            springAnimation('down');
+          } else {
+            springAnimation('up');
+          }
         }
-      } else {
-        // is dragging up
-        if (scrollOffset.current !== -300 && gesture.dy >= -100) {
-          springAnimation('down');
-        } else {
-          springAnimation('up');
-        }
-      }
-    },
-  });
+      },
+    }),
+  ).current;
 
   const springAnimation = (direction: 'up' | 'down') => {
     scrollOffset.current = direction === 'down' ? 0 : -300;

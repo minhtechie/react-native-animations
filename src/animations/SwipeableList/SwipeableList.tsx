@@ -28,34 +28,36 @@ const SwipeableList: React.FC<SwipeableListProps> = ({data, onDelete}) => {
   const swipeOffset = useRef(0);
   const scrollOffset = useRef(0);
 
-  const panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: (evt, gesture) => {
-      return Math.abs(gesture.dx) > Math.abs(gesture.dy);
-    },
-    onPanResponderGrant: (evt, gesture) => {
-      /* 24 is total vertical margin
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (evt, gesture) => {
+        return Math.abs(gesture.dx) > Math.abs(gesture.dy);
+      },
+      onPanResponderGrant: (evt, gesture) => {
+        /* 24 is total vertical margin
       add scrollOffset to get index of items that need scrolling to be seen */
-      const swipedItemIndex =
-        Math.floor((gesture.y0 + scrollOffset.current) / (ITEM_HEIGHT + 24)) -
-        1;
-      // if user swipes new item, animate the old item to origin position
-      if (swipedItemIndex !== activeItemIndex) {
-        swipeOffset.current = 0;
-        Animated.spring(animatedValue, {
-          toValue: 0,
-          useNativeDriver: true,
-        }).start(() => {
-          setActiveItemIndex(swipedItemIndex);
-        });
-      }
-    },
-    onPanResponderMove: (evt, gesture) => {
-      animatedValue.setValue(gesture.dx + swipeOffset.current);
-    },
-    onPanResponderRelease: (evt, gesture) => {
-      handleGestureRelease(gesture.dx);
-    },
-  });
+        const swipedItemIndex =
+          Math.floor((gesture.y0 + scrollOffset.current) / (ITEM_HEIGHT + 24)) -
+          1;
+        // if user swipes new item, animate the old item to origin position
+        if (swipedItemIndex !== activeItemIndex) {
+          swipeOffset.current = 0;
+          Animated.spring(animatedValue, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start(() => {
+            setActiveItemIndex(swipedItemIndex);
+          });
+        }
+      },
+      onPanResponderMove: (evt, gesture) => {
+        animatedValue.setValue(gesture.dx + swipeOffset.current);
+      },
+      onPanResponderRelease: (evt, gesture) => {
+        handleGestureRelease(gesture.dx);
+      },
+    }),
+  ).current;
 
   const handleGestureRelease = (dx: number) => {
     if (animatedValue._value !== 0) {

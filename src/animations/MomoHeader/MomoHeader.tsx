@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useRef} from 'react';
 import {
   SafeAreaView,
@@ -17,7 +16,6 @@ const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 const UPPER_HEADER_HEIGHT = 32;
 const UPPER_HEADER_PADDING_TOP = 4;
 const LOWER_HEADER_HEIGHT = 96;
-const SCROLL_SNAPPING_THRESHOLD = 20;
 
 export default function MomoHeader() {
   const animatedValue = useRef(new Animated.Value(0)).current;
@@ -186,18 +184,15 @@ export default function MomoHeader() {
           lastOffsetY.current = offsetY;
           animatedValue.setValue(offsetY);
         }}
-        onScrollEndDrag={e => {
-          const offsetY = e.nativeEvent.contentOffset.y;
-          if (offsetY > SCROLL_SNAPPING_THRESHOLD) {
-            scrollViewRef.current?.scrollTo({
-              y: scrollDirection.current === 'down' ? 100 : 0,
-              animated: true,
-            });
-          }
+        onScrollEndDrag={() => {
+          scrollViewRef.current?.scrollTo({
+            y: scrollDirection.current === 'down' ? 100 : 0,
+            animated: true,
+          });
         }}
         scrollEventThrottle={16}>
         <View style={styles.spaceForHeader} />
-        <View style={{height: 815, backgroundColor: 'white'}} />
+        <View style={styles.scrollViewContent} />
       </ScrollView>
     </View>
   );
@@ -279,5 +274,9 @@ const styles = StyleSheet.create({
   },
   spaceForHeader: {
     height: LOWER_HEADER_HEIGHT,
+  },
+  scrollViewContent: {
+    height: 1000,
+    backgroundColor: 'white',
   },
 });

@@ -40,7 +40,6 @@ const ReactToMessage = () => {
           <Text style={styles.messageText}>
             Like and subscribe to Minh Techie channel
           </Text>
-          <Text style={styles.messageSentTime}>6:09</Text>
         </View>
 
         <TouchableOpacity
@@ -114,7 +113,7 @@ const ReactToMessage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#eaeaeaea',
+    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -130,16 +129,16 @@ const styles = StyleSheet.create({
   },
   messageContent: {
     width: WINDOW_WIDTH * 0.7,
-    backgroundColor: 'white',
+    backgroundColor: '#178BF4',
     borderRadius: 8,
     padding: 8,
   },
   messageText: {
     fontSize: 20,
-    color: '#333',
+    color: 'white',
   },
   messageSentTime: {
-    color: 'grey',
+    color: 'white',
     fontSize: 14,
     marginTop: 4,
   },
@@ -178,14 +177,14 @@ const styles = StyleSheet.create({
   },
   loveCountCircle: {
     position: 'absolute',
-    bottom: -8,
+    bottom: -16,
     justifyContent: 'center',
     alignItems: 'center',
     width: 32,
     height: 32,
     right: -8,
     borderRadius: 16,
-    backgroundColor: '#ffd500',
+    backgroundColor: 'orange',
     zIndex: 100,
   },
   loveCountText: {

@@ -57,90 +57,94 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
       : (imageHeight * scale - cropHeight) / 2;
   };
 
-  const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: (evt, gesture) => {
-      const {
-        nativeEvent: {touches},
-      } = evt;
-      if (touches.length === 2) {
-        /* PINCHING */
-        const pointA = {x: touches[0].pageX, y: touches[0].pageY};
-        const pointB = {x: touches[1].pageX, y: touches[1].pageY};
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (evt, gesture) => {
+        const {
+          nativeEvent: {touches},
+        } = evt;
+        if (touches.length === 2) {
+          /* PINCHING */
+          const pointA = {x: touches[0].pageX, y: touches[0].pageY};
+          const pointB = {x: touches[1].pageX, y: touches[1].pageY};
 
-        if (!isPinching.current) {
-          isPinching.current = true;
-          /* Get the distance between 2 finger tips when start pinch gesture */
-          initialDistance.current = calcDistance(pointA, pointB);
-        } else {
-          const distance = calcDistance(pointA, pointB);
-          /**
-           * Scale's calculated base on the distance between 2 fingers while pinching
-           * divided by the initial distance.
-           */
-          let scale = (distance / initialDistance.current) * prevScale.current;
-          if (scale > 5) {
-            scale = 5;
-          } else if (scale < 1) {
-            scale = 1;
+          if (!isPinching.current) {
+            isPinching.current = true;
+            /* Get the distance between 2 finger tips when start pinch gesture */
+            initialDistance.current = calcDistance(pointA, pointB);
+          } else {
+            const distance = calcDistance(pointA, pointB);
+            /**
+             * Scale's calculated base on the distance between 2 fingers while pinching
+             * divided by the initial distance.
+             */
+            let scale =
+              (distance / initialDistance.current) * prevScale.current;
+            if (scale > 5) {
+              scale = 5;
+            } else if (scale < 1) {
+              scale = 1;
+            }
+            animatedScale.setValue(scale);
           }
-          animatedScale.setValue(scale);
+        } else if (touches.length === 1 && !isPinching.current) {
+          /* DRAGGING */
+          const currentScale = animatedScale._value;
+          /* Size of the hidden area when image is zoomed in */
+          const maximumX = calcHiddenArea('x', currentScale);
+          const maximumY = calcHiddenArea('y', currentScale);
+          /* Total drag distance on X & Y axis */
+          const dx = Math.abs((gesture.dx + offsetX.current) * currentScale);
+          const dy = Math.abs((gesture.dy + offsetY.current) * currentScale);
+          /**
+           * When the dragging distance >= size of the hidden area
+           * meaning the hidden area can now be seen, stop dragging
+           */
+          if (maximumX > 0 && dx < maximumX) {
+            animatedTranslateX.setValue(gesture.dx + offsetX.current);
+          }
+          if (maximumY > 0 && dy < maximumY) {
+            animatedTranslateY.setValue(gesture.dy + offsetY.current);
+          }
         }
-      } else if (touches.length === 1 && !isPinching.current) {
-        /* DRAGGING */
+      },
+      onPanResponderRelease: () => {
         const currentScale = animatedScale._value;
-        /* Size of the hidden area when image is zoomed in */
-        const maximumX = calcHiddenArea('x', currentScale);
-        const maximumY = calcHiddenArea('y', currentScale);
-        /* Total drag distance on X & Y axis */
-        const dx = Math.abs((gesture.dx + offsetX.current) * currentScale);
-        const dy = Math.abs((gesture.dy + offsetY.current) * currentScale);
-        /**
-         * When the dragging distance >= size of the hidden area
-         * meaning the hidden area can now be seen, stop dragging
-         */
-        if (maximumX > 0 && dx < maximumX) {
-          animatedTranslateX.setValue(gesture.dx + offsetX.current);
-        }
-        if (maximumY > 0 && dy < maximumY) {
-          animatedTranslateY.setValue(gesture.dy + offsetY.current);
-        }
-      }
-    },
-    onPanResponderRelease: () => {
-      const currentScale = animatedScale._value;
-      if (isPinching.current) {
-        /**
-         * If user zooms in -> drags to the corner -> zooms out
-         * there'll be a blank space so we must spring the image back
-         * to the corner to remove that space
-         */
-        const hiddenAreaX = calcHiddenArea('x', currentScale);
-        const hiddenAreaY = calcHiddenArea('y', currentScale);
-        const dx = Math.abs(animatedTranslateX._value * currentScale);
-        const dy = Math.abs(animatedTranslateY._value * currentScale);
+        if (isPinching.current) {
+          /**
+           * If user zooms in -> drags to the corner -> zooms out
+           * there'll be a blank space so we must spring the image back
+           * to the corner to remove that space
+           */
+          const hiddenAreaX = calcHiddenArea('x', currentScale);
+          const hiddenAreaY = calcHiddenArea('y', currentScale);
+          const dx = Math.abs(animatedTranslateX._value * currentScale);
+          const dy = Math.abs(animatedTranslateY._value * currentScale);
 
-        if (dx > hiddenAreaX) {
-          const leftEdge = hiddenAreaX / currentScale;
-          const toValue = animatedTranslateX._value > 0 ? leftEdge : -leftEdge;
-          Animated.spring(animatedTranslateX, {
-            toValue,
-            useNativeDriver: true,
-          }).start(() => animatedTranslateX.setValue(toValue));
+          if (dx > hiddenAreaX) {
+            const leftEdge = hiddenAreaX / currentScale;
+            const toValue =
+              animatedTranslateX._value > 0 ? leftEdge : -leftEdge;
+            Animated.spring(animatedTranslateX, {
+              toValue,
+              useNativeDriver: true,
+            }).start(() => animatedTranslateX.setValue(toValue));
+          }
+          if (dy > hiddenAreaY) {
+            Animated.spring(animatedTranslateY, {
+              toValue: 0,
+              useNativeDriver: true,
+            }).start(() => animatedTranslateY.setValue(0));
+          }
         }
-        if (dy > hiddenAreaY) {
-          Animated.spring(animatedTranslateY, {
-            toValue: 0,
-            useNativeDriver: true,
-          }).start(() => animatedTranslateY.setValue(0));
-        }
-      }
-      prevScale.current = currentScale;
-      offsetX.current = animatedTranslateX._value;
-      offsetY.current = animatedTranslateY._value;
-      isPinching.current = false;
-    },
-  });
+        prevScale.current = currentScale;
+        offsetX.current = animatedTranslateX._value;
+        offsetY.current = animatedTranslateY._value;
+        isPinching.current = false;
+      },
+    }),
+  ).current;
 
   const imageAnimation = {
     transform: [
