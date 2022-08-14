@@ -49,17 +49,17 @@ const COFFEE_DATA = [
 const SLIDER_HEIGHT = WINDOW_HEIGHT - 120;
 const IMG_HEIGHT = SLIDER_HEIGHT * 0.7;
 
-// const getOpacity = (index: number) => {
-//   switch (index) {
-//     case 0:
-//     case 1:
-//       return 1;
-//     case 2:
-//       return 0.5;
-//     default:
-//       return 0;
-//   }
-// };
+const getOpacity = (index: number) => {
+  switch (index) {
+    case 0:
+    case 1:
+      return 1;
+    case 2:
+      return 0.5;
+    default:
+      return 0;
+  }
+};
 
 const CoffeeItem = ({
   image,
