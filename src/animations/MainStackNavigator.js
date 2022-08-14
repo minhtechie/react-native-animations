@@ -21,6 +21,7 @@ import ZingCarousel from './ZingCarousel/ZingCarousel';
 import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
 import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
 import FacebookPostReaction from './FacebookPostReaction/FacebookPostReaction';
+import CoffeeSlider from './CoffeeSlider/CoffeeSlider';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ export default () => (
       screenOptions={{
         headerBackTitle: '',
       }}>
+      <Stack.Screen
+        name="CoffeeSlider"
+        component={CoffeeSlider}
+        options={{header: () => null}}
+      />
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -74,7 +80,7 @@ export default () => (
       <Stack.Screen
         name="ReactToMessage"
         component={ReactToMessage}
-        options={{title: 'React To Message'}}
+        options={{header: () => null}}
       />
       <Stack.Screen
         name="DoubleTapToHeart"
