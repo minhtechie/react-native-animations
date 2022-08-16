@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {Animated, PanResponder, StyleSheet, View} from 'react-native';
+import {Animated, PanResponder, Platform, StyleSheet, View} from 'react-native';
 
 import {WINDOW_HEIGHT} from '../../utils';
 
@@ -86,10 +86,21 @@ const styles = StyleSheet.create({
     width: '100%',
     height: SHEET_MAX_HEIGHT,
     bottom: -SHEET_MAX_HEIGHT + SHEET_MIN_HEIGHT,
-    elevation: 10,
+    ...Platform.select({
+      android: {elevation: 3},
+      ios: {
+        shadowColor: '#a8bed2',
+        shadowOpacity: 1,
+        shadowRadius: 6,
+        shadowOffset: {
+          width: 2,
+          height: 2,
+        },
+      },
+    }),
     backgroundColor: 'white',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
   },
   draggableArea: {
     width: 100,
