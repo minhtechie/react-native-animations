@@ -1,18 +1,17 @@
 import React, {useRef} from 'react';
 import {Animated, PanResponder, Platform, StyleSheet, View} from 'react-native';
-
 import {WINDOW_HEIGHT} from '../../utils';
 
-const SHEET_MAX_HEIGHT = WINDOW_HEIGHT * 0.6;
-const SHEET_MIN_HEIGHT = WINDOW_HEIGHT * 0.1;
-const MAX_UPWARD_TRANSLATE_Y = SHEET_MIN_HEIGHT - SHEET_MAX_HEIGHT; // negative number
+const BOTTOM_SHEET_MAX_HEIGHT = WINDOW_HEIGHT * 0.6;
+const BOTTOM_SHEET_MIN_HEIGHT = WINDOW_HEIGHT * 0.1;
+const MAX_UPWARD_TRANSLATE_Y =
+  BOTTOM_SHEET_MIN_HEIGHT - BOTTOM_SHEET_MAX_HEIGHT; // negative number;
 const MAX_DOWNWARD_TRANSLATE_Y = 0;
 const DRAG_THRESHOLD = 50;
 
-const DraggableBottomView = () => {
+const DraggableBottomSheet = () => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const lastGestureDy = useRef(0);
-
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -24,22 +23,22 @@ const DraggableBottomView = () => {
       },
       onPanResponderRelease: (e, gesture) => {
         animatedValue.flattenOffset();
-
-        // lastGestureDy.current += gesture.dy;
+        lastGestureDy.current += gesture.dy;
         // if (lastGestureDy.current < MAX_UPWARD_TRANSLATE_Y) {
         //   lastGestureDy.current = MAX_UPWARD_TRANSLATE_Y;
-        // } else if (lastGestureDy.current > 0) {
+        // } else if (lastGestureDy.current > MAX_DOWNWARD_TRANSLATE_Y) {
         //   lastGestureDy.current = MAX_DOWNWARD_TRANSLATE_Y;
         // }
+
         if (gesture.dy > 0) {
-          // is dragging down
-          if (lastGestureDy.current !== 0 && gesture.dy <= DRAG_THRESHOLD) {
+          // dragging down
+          if (gesture.dy <= DRAG_THRESHOLD) {
             springAnimation('up');
           } else {
             springAnimation('down');
           }
         } else {
-          // is dragging up
+          // dragging up
           if (gesture.dy >= -DRAG_THRESHOLD) {
             springAnimation('down');
           } else {
@@ -51,6 +50,7 @@ const DraggableBottomView = () => {
   ).current;
 
   const springAnimation = (direction: 'up' | 'down') => {
+    console.log('direction', direction);
     lastGestureDy.current =
       direction === 'down' ? MAX_DOWNWARD_TRANSLATE_Y : MAX_UPWARD_TRANSLATE_Y;
     Animated.spring(animatedValue, {
@@ -72,20 +72,25 @@ const DraggableBottomView = () => {
   };
 
   return (
-    <Animated.View style={[styles.bottomSheet, bottomSheetAnimation]}>
-      <View style={styles.draggableArea} {...panResponder.panHandlers}>
-        <View style={styles.dragHandle} pointerEvents={'none'} />
-      </View>
-    </Animated.View>
+    <View style={styles.container}>
+      <Animated.View style={[styles.bottomSheet, bottomSheetAnimation]}>
+        <View style={styles.draggableArea} {...panResponder.panHandlers}>
+          <View style={styles.dragHandle} />
+        </View>
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   bottomSheet: {
     position: 'absolute',
     width: '100%',
-    height: SHEET_MAX_HEIGHT,
-    bottom: -SHEET_MAX_HEIGHT + SHEET_MIN_HEIGHT,
+    height: BOTTOM_SHEET_MAX_HEIGHT,
+    bottom: BOTTOM_SHEET_MIN_HEIGHT - BOTTOM_SHEET_MAX_HEIGHT,
     ...Platform.select({
       android: {elevation: 3},
       ios: {
@@ -103,12 +108,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
   },
   draggableArea: {
-    width: 100,
+    width: 132,
     height: 32,
     alignSelf: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
-    backgroundColor: 'white',
+    alignItems: 'center',
   },
   dragHandle: {
     width: 100,
@@ -118,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DraggableBottomView;
+export default DraggableBottomSheet;
