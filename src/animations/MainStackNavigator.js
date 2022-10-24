@@ -21,6 +21,7 @@ import ZingCarousel from './ZingCarousel/ZingCarousel';
 import AnimatedBannerWithSearchInput from './AnimatedBannerWithSearchInput/AnimatedBannerWithSearchInput';
 import TikTokMusicDisc from './TikTokMusicDisc/TikTokMusicDisc';
 import FacebookPostReaction from './FacebookPostReaction/FacebookPostReaction';
+import MessengerInput from './MessengerInput/MessengerInput';
 
 const Stack = createNativeStackNavigator();
 
@@ -96,6 +97,7 @@ export default () => (
         component={ZingCarousel}
         options={{header: () => null}}
       />
+      <Stack.Screen name="MessengerInput" component={MessengerInput} />
     </Stack.Navigator>
   </NavigationContainer>
 );
@@ -108,7 +110,7 @@ const MenuItem = ({onPress, label}) => {
   );
 };
 
-const HomeScreen = ({navigation}: any) => {
+const HomeScreen = ({navigation}) => {
   const {navigate} = navigation;
   return (
     <SafeAreaView style={styles.container}>
@@ -158,6 +160,10 @@ const HomeScreen = ({navigation}: any) => {
         <MenuItem
           onPress={() => navigate('FacebookPostReaction')}
           label="Facebook Post Reaction"
+        />
+        <MenuItem
+          onPress={() => navigate('MessengerInput')}
+          label="Messenger Input"
         />
       </ScrollView>
     </SafeAreaView>
